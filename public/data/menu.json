@@ -12,13 +12,13 @@
     },
 
     {
-      "route": "tables",
+      "route": "product",
       "name": "product",
       "type": "sub",
       "icon": "format_line_spacing",
       "children": [
         {
-          "route": "kitchen-sink",
+          "route": "list",
           "name": "list",
           "type": "link"
         },

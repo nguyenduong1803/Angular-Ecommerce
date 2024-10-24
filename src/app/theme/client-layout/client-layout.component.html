@@ -1,0 +1,27 @@
+<div >
+  <mat-toolbar color="primary" class="header-toolbar">
+    <span class="logo">ShopName</span>
+
+    <span class="spacer"></span>
+
+    <nav>
+      <a mat-button routerLink="/" class="nav-link">Trang chủ</a>
+      <a mat-button routerLink="/products" class="nav-link">Sản phẩm</a>
+      <a mat-button routerLink="/about" class="nav-link">Giới thiệu</a>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>shopping_cart</mat-icon>
+      <span class="badge">{{ cartItemCount }}</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="viewCart()">Xem giỏ hàng</button>
+      <button mat-menu-item (click)="checkout()">Thanh toán</button>
+    </mat-menu>
+
+    <button mat-button (click)="login()">Đăng nhập</button>
+  </mat-toolbar>
+
+</div>

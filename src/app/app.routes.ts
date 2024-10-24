@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@core';
 import { AdminLayoutComponent } from '@theme/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from '@theme/auth-layout/auth-layout.component';
+import { ClientLayoutComponent } from '@theme/client-layout/client-layout.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { Error403Component } from './routes/sessions/403.component';
 import { Error404Component } from './routes/sessions/404.component';
@@ -21,6 +22,10 @@ export const routes: Routes = [
       { path: '403', component: Error403Component },
       { path: '404', component: Error404Component },
       { path: '500', component: Error500Component },
+      {
+        path: 'product',
+        loadChildren: () => import('./routes/product/product.routes').then(m => m.routes),
+      },
       {
         path: 'design',
         loadChildren: () => import('./routes/design/design.routes').then(m => m.routes),
@@ -61,6 +66,13 @@ export const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+    ],
+  },
+  {
+    path: 'client',
+    component: ClientLayoutComponent,
+    children: [
+      { path: '',  loadChildren: () => import('./routes/client/client.routes').then(m => m.routes) },
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
