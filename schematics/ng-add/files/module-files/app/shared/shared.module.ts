@@ -19,7 +19,7 @@ import { ErrorCodeComponent } from './components/error-code/error-code.component
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
-
+import { ProductsComponent } from '@shared/components/products/products.component';
 const MODULES: any[] = [
   CommonModule,
   RouterModule,
@@ -35,7 +35,7 @@ const MODULES: any[] = [
   NgProgressbar,
   NgProgressRouter,
 ];
-const COMPONENTS: any[] = [BreadcrumbComponent, PageHeaderComponent, ErrorCodeComponent];
+const COMPONENTS: any[] = [BreadcrumbComponent, PageHeaderComponent, ErrorCodeComponent, ProductsComponent];
 const DIRECTIVES: any[] = [DisableControlDirective];
 const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
 

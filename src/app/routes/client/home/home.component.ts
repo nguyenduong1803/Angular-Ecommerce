@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 
 @Component({
   selector: 'app-client-home',
@@ -11,8 +10,6 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
   ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-
-  ngOnInit() {}
 }

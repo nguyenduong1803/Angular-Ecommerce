@@ -5,7 +5,7 @@ const PROXY_CONFIG = {
     target: 'https://api.github.com',
     changeOrigin: true,
     secure: false,
-    logLevel: 'debug',
+    logLevel: '',
     // onProxyReq: (proxyReq, req, res) => {
     //   const cookieMap = {
     //     SID: '',
