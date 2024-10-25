@@ -3,13 +3,9 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-client-home',
-  templateUrl:'./home.component.html',
+  templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   standalone: true,
-  imports: [
-    FormsModule,
-  ],
+  imports: [FormsModule],
 })
-export class HomeComponent {
-
-}
+export class HomeComponent {}
