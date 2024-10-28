@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '@env/environment';
+import { baseUrl } from '@env/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +9,9 @@ export class BillService {
   protected readonly http = inject(HttpClient);
   constructor() {}
   getSupplier() {
-    return this.http.get(environment.baseUrl + 'Common/Supplier');
+    return this.http.get(baseUrl + 'Common/Supplier');
   }
   getBillStatus() {
-    return this.http.get(environment.baseUrl + 'Common/BillStatus');
+    return this.http.get(baseUrl + 'Common/BillStatus');
   }
 }

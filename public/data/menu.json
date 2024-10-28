@@ -12,7 +12,7 @@
     },
 
     {
-      "route": "product",
+      "route": "admin/product",
       "name": "product",
       "type": "sub",
       "icon": "format_line_spacing",

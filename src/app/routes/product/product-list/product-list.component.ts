@@ -9,7 +9,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { PageHeaderComponent } from '@shared';
 import { TablesDataService } from '../data.service';
-import { TablesKitchenSinkEditComponent } from './edit/edit.component';
+import { ProductService } from '@core/services/product.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-table-product-list',
@@ -28,85 +29,41 @@ import { TablesKitchenSinkEditComponent } from './edit/edit.component';
 })
 export class ProductListComponent implements OnInit {
   private readonly translate = inject(TranslateService);
-  private readonly dataSrv = inject(TablesDataService);
   private readonly dialog = inject(MtxDialog);
 
   columns: MtxGridColumn[] = [
     {
-      header: this.translate.stream('position'),
-      field: 'position',
-      sortable: true,
+      header: 'Tên sản phẩm',
+      field: 'name',
+      sortable: false,
       minWidth: 100,
       width: '100px',
     },
     {
-      header: this.translate.stream('name'),
-      field: 'name',
-      sortable: true,
+      header: 'Mã sản phẩm',
+      field: 'code',
+      sortable: false,
       disabled: true,
       minWidth: 100,
       width: '100px',
     },
     {
-      header: this.translate.stream('weight'),
-      field: 'weight',
+      header: 'Danh mục',
+      field: 'categoryName',
       minWidth: 100,
     },
     {
-      header: this.translate.stream('symbol'),
-      field: 'symbol',
+      header: 'Nhà cung cấp',
+      field: 'supplierName',
       minWidth: 100,
     },
     {
-      header: this.translate.stream('gender'),
-      field: 'gender',
-      minWidth: 100,
+      header: 'Mô tả',
+      field: 'description',
+      minWidth: 300,
     },
     {
-      header: this.translate.stream('mobile'),
-      field: 'mobile',
-      hide: true,
-      minWidth: 120,
-    },
-    {
-      header: this.translate.stream('tele'),
-      field: 'tele',
-      minWidth: 120,
-      width: '120px',
-    },
-    {
-      header: this.translate.stream('birthday'),
-      field: 'birthday',
-      minWidth: 180,
-    },
-    {
-      header: this.translate.stream('city'),
-      field: 'city',
-      minWidth: 120,
-    },
-    {
-      header: this.translate.stream('address'),
-      field: 'address',
-      minWidth: 180,
-      width: '200px',
-    },
-    {
-      header: this.translate.stream('company'),
-      field: 'company',
-      minWidth: 120,
-    },
-    {
-      header: this.translate.stream('website'),
-      field: 'website',
-      minWidth: 180,
-    },
-    {
-      header: this.translate.stream('email'),
-      field: 'email',
-      minWidth: 180,
-    },
-    {
-      header: this.translate.stream('operation'),
+      header: 'Hành động',
       field: 'operation',
       minWidth: 140,
       width: '140px',
@@ -117,7 +74,7 @@ export class ProductListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           tooltip: this.translate.stream('edit'),
-          click: record => this.edit(record),
+          click: record => {},
         },
         {
           type: 'icon',
@@ -149,19 +106,25 @@ export class ProductListComponent implements OnInit {
   showPaginator = true;
   expandable = false;
   columnResizable = false;
-
+  private productService = inject(ProductService);
+  category: any[] = [];
+  products: any[] = [];
   ngOnInit() {
-    this.list = this.dataSrv.getData();
     this.isLoading = false;
+    this.getData();
   }
 
-  edit(value: any) {
-    const dialogRef = this.dialog.originalOpen(TablesKitchenSinkEditComponent, {
-      width: '600px',
-      data: { record: value },
-    });
-
-    dialogRef.afterClosed().subscribe(() => console.log('The dialog was closed'));
+  getData() {
+    this.productService
+      .getAll({})
+      .pipe(
+        tap(value => {
+          console.log(value);
+        })
+      )
+      .subscribe(value => {
+        this.products = value.data;
+      });
   }
 
   delete(value: any) {

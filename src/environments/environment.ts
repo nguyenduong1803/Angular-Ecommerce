@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: '',
+  baseUrl:'',
   useHash: false,
 };
+export const baseUrl = 'http://transytrong20.ddns.net:12345/api/'
 
 /*
  * For easier debugging in development mode, you can import the following file

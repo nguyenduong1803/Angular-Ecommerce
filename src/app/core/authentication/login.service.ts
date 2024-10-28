@@ -4,6 +4,12 @@ import { map } from 'rxjs';
 
 import { Menu } from '@core';
 import { Token, User } from './interface';
+import { environment } from '@env/environment';
+
+interface LoginResponse {
+  token:string;
+  message: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +19,9 @@ export class LoginService {
 
   login(username: string, password: string, rememberMe = false) {
     return this.http.post<Token>('/auth/login', { username, password, rememberMe });
+  }
+  prelogin(username: string, password: string) {
+    return this.http.post<LoginResponse>(environment.baseUrl + 'Auth', { username, password });
   }
 
   refresh(params: Record<string, any>) {

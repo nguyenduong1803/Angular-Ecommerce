@@ -1,5 +1,4 @@
 .slick-loading .slick-list {}
-
 .slick-next,
 .slick-prev {
   position: absolute;
@@ -14081,7 +14080,8 @@ i.fa-solid.fa-arrow-right-to-bracket {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1185px;
+  max-width: 100%;
+  width: 100%;
   padding: 0;
   margin: auto;
 }
@@ -14803,7 +14803,7 @@ input#termsofservice {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1200px;
+    // max-width: 1200px;
     padding: 0;
     margin: auto;
   }
@@ -26203,6 +26203,12 @@ fieldset.answer input {
 
 .html-order-details-page .master-wrapper-page {
   background: #F5F5F7;
+}
+.order-summary-content.container {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    min-width: 0;
 }
 
 .html-order-completed-page .section.order-summary h1 {
@@ -41422,4 +41428,32 @@ button.btn.btn-primary.btn-product-liked::before {
   padding-top: 30px;
   padding-bottom: 30px;
   background-color: #f5f5f7;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.login-button {
+  color: white; /* Đổi màu chữ thành trắng */
+}
+
+.cart-count {
+  background-color: red; /* Màu nền cho số lượng */
+  color: white; /* Màu chữ cho số lượng */
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
+
+.mat-icon {
+  font-size: 20px;
+  color: white; /* Đặt màu cho biểu tượng thành trắng */
+}
+.avatar {
+  font-size: 20px;
+  color: white; /* Đặt màu cho biểu tượng thành trắng */
 }

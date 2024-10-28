@@ -205,9 +205,9 @@
                 </div>
               </div>
 
-              <!-- danh mục -->
               <div class="page-body">
                 <div class="all_sub-category-grid">
+                  <!-- danh mục -->
                   <div class="category-grid sub-category-grid">
                     <div class="item-box active">
                       <div class="sub-category-item">
@@ -292,8 +292,8 @@
                     <div class="product-grid">
                       <div class="item-grid">
                         <!-- product list -->
-                        <div class="item-box">
-                          <div class="product-item" data-productid="94">
+                        <div *ngFor="let item of products; index as i;" class="item-box">
+                          <div class="product-item" >
                             <div class="product_tag">
                               <img src="/images/uploaded/icon/giam-500.png" alt="" />
                             </div>
@@ -304,7 +304,7 @@
                               >
                                 <img
                                   alt="Ảnh của MacBook Air M1 2020 (8GB RAM | 256GB SSD)"
-                                  src="https://shopdunk.com/images/thumbs/0000723_macbook-air-m1-2020-8gb-ram-256gb-ssd_240.png"
+                                  [src]="renderImage(item.images[0])"
                                   title="Hiển thị chi tiết cho MacBook Air M1 2020 (8GB RAM | 256GB SSD)"
                                 />
                               </a>
@@ -312,7 +312,7 @@
                             <div class="details">
                               <h3 class="product-title">
                                 <a href="/macbook-air-m1-2020"
-                                  >MacBook Air M1 2020 (8GB RAM | 256GB SSD)</a
+                                  >{{item.name}}</a
                                 >
                               </h3>
                               <div class="description"></div>
@@ -322,7 +322,7 @@
                                   <div class="price-ratio-container">
                                     <span class="price price-ratio">-37%</span>
                                   </div>
-                                  <span class="price old-price">28.990.000₫</span>
+                                  <span class="price old-price">{{item.price}}₫</span>
                                   <span class="price actual-price">18.250.000₫</span>
                                 </div>
                               </div>

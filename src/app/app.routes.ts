@@ -9,11 +9,10 @@ import { Error404Component } from './routes/sessions/404.component';
 import { Error500Component } from './routes/sessions/500.component';
 import { LoginComponent } from './routes/sessions/login/login.component';
 import { RegisterComponent } from './routes/sessions/register/register.component';
-import { GuestLayoutComponent } from '@theme/guest-layout/guest-layout.component';
 
 export const routes: Routes = [
   {
-    path: 'client',
+    path: '',
     component: ClientLayoutComponent,
     children: [
       {
@@ -23,7 +22,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: '',
+    path: 'admin',
     component: AdminLayoutComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard],
@@ -79,6 +78,5 @@ export const routes: Routes = [
       { path: 'register', component: RegisterComponent },
     ],
   },
-
   { path: '**', redirectTo: 'dashboard' },
 ];
