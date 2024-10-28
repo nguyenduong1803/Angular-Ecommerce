@@ -1,0 +1,53 @@
+.wrap-button {
+  margin-top: 12px
+}
+
+
+.product-container {
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 4px;
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+}
+
+.config-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 16px;
+  margin-right: 8px;
+  margin-left: 8px;
+  margin-bottom: 6px;
+}
+
+.mat-mdc-form-field {
+  margin-bottom: 16px;
+}
+
+.configuration-item {
+  border: 1px solid rgba(72, 72, 72, 0.3);
+  padding: 10px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-radius: 6px;;
+  margin-bottom: 12px;
+}
+
+.flex-1{
+  flex:1
+}
+
+.wrap-config{
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.hidden-button{
+  display: none;
+  height: 0px;
+  width: 0px;
+}

@@ -11,6 +11,7 @@ import { PageHeaderComponent } from '@shared';
 import { TablesDataService } from '../data.service';
 import { ProductService } from '@core/services/product.service';
 import { tap } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-table-product-list',
@@ -25,6 +26,7 @@ import { tap } from 'rxjs';
     MatRadioModule,
     MtxGridModule,
     PageHeaderComponent,
+    RouterLink
   ],
 })
 export class ProductListComponent implements OnInit {

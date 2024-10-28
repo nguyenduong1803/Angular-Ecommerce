@@ -214,76 +214,18 @@
                         <div class="title"><a href="/mac" title="All model"> Tất cả </a></div>
                       </div>
                     </div>
-                    <div class="item-box">
+                    <div *ngFor="let item of category; index as i;"  class="item-box">
                       <div class="sub-category-item">
                         <div class="title">
-                          <a
-                            href="/macbook-pro"
-                            title="Hiển thị sản phẩm trong danh mục MacBook Pro M2"
-                          >
-                            MacBook Pro M2
+                          <a href="">
+                            {{item.name}}
                           </a>
                         </div>
                       </div>
                     </div>
-                    <div class="item-box">
-                      <div class="sub-category-item">
-                        <div class="title">
-                          <a
-                            href="/macbook-pro-m3-2023"
-                            title="Hiển thị sản phẩm trong danh mục MacBook Pro M3"
-                          >
-                            MacBook Pro M3
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-box">
-                      <div class="sub-category-item">
-                        <div class="title">
-                          <a
-                            href="/macbook-air"
-                            title="Hiển thị sản phẩm trong danh mục MacBook Air"
-                          >
-                            MacBook Air
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-box">
-                      <div class="sub-category-item">
-                        <div class="title">
-                          <a href="/imac" title="Hiển thị sản phẩm trong danh mục iMac"> iMac </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-box">
-                      <div class="sub-category-item">
-                        <div class="title">
-                          <a href="/mac-mini" title="Hiển thị sản phẩm trong danh mục Mac Mini">
-                            Mac Mini
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-box">
-                      <div class="sub-category-item">
-                        <div class="title">
-                          <a href="/mac-pro" title="Hiển thị sản phẩm trong danh mục Mac Pro">
-                            Mac Pro
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-box">
-                      <div class="sub-category-item">
-                        <div class="title">
-                          <a href="/mac-studio" title="Hiển thị sản phẩm trong danh mục Mac Studio">
-                            Mac Studio
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+
+
+
                   </div>
                 </div>
                 <div class="products-container">
@@ -304,7 +246,7 @@
                               >
                                 <img
                                   alt="Ảnh của MacBook Air M1 2020 (8GB RAM | 256GB SSD)"
-                                  [src]="renderImage(item.images[0])"
+                                  [src]="baseImage + item.image[0].url"
                                   title="Hiển thị chi tiết cho MacBook Air M1 2020 (8GB RAM | 256GB SSD)"
                                 />
                               </a>

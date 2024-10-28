@@ -4,7 +4,7 @@ import { ProductService } from '@core/services/product.service';
 import { tap } from 'rxjs';
 import { CategoryService } from '@core/services/categogy.service';
 import { CommonModule } from '@angular/common';
-import { environment } from '@env/environment';
+import { baseImage } from '@core/services/constant';
 
 @Component({
   selector: 'app-client-home',
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   private categoryService = inject(CategoryService);
   category: any[] = [];
   products: any[] = [];
+  baseImage = "http://transytrong20.ddns.net:12345/"
   constructor() {}
   ngOnInit() {
     this.getData();
@@ -50,6 +51,7 @@ export class HomeComponent implements OnInit {
   }
 
   renderImage(url: string){
-    return environment.baseUrl + 'Product/'+url
+    console.log('url:', url)
+    return baseImage + 'Product/'+url
   }
 }
