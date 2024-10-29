@@ -32,6 +32,73 @@
         "except": "GUEST"
       }
     },
+
+    {
+      "route": "admin/category",
+      "name": "category",
+      "type": "sub",
+      "icon": "all_inbox",
+      "children": [
+        {
+          "route": "list",
+          "name": "list",
+          "type": "link"
+        },
+        {
+          "route": "remote-data",
+          "name": "category",
+          "type": "link"
+        }
+      ],
+      "permissions": {
+        "except": "GUEST"
+      }
+    },
+
+    {
+      "route": "admin/bill",
+      "name": "bill",
+      "type": "sub",
+      "icon": "format_line_spacing",
+      "children": [
+        {
+          "route": "list",
+          "name": "list",
+          "type": "link"
+        },
+        {
+          "route": "remote-data",
+          "name": "bill",
+          "type": "link"
+        }
+      ],
+      "permissions": {
+        "except": "GUEST"
+      }
+    },
+
+    {
+      "route": "admin/supplier",
+      "name": "supplier",
+      "type": "sub",
+      "icon": "favorite",
+      "children": [
+        {
+          "route": "list",
+          "name": "list",
+          "type": "link"
+        },
+        {
+          "route": "remote-data",
+          "name": "supplier",
+          "type": "link"
+        }
+      ],
+      "permissions": {
+        "except": "GUEST"
+      }
+    },
+
     {
       "route": "design",
       "name": "design",

@@ -17,6 +17,9 @@ export class ProductService {
   getAll(params: any) {
     return this.http.get<any>(baseUrl + 'Product/Paging', { params });
   }
+  getDetail(id: string) {
+    return this.http.get<any>(baseUrl + 'Product/Paging', { params:{id} });
+  }
   delete(id: string) {
     return this.http.delete(baseUrl + 'Product', { params: { id } });
   }

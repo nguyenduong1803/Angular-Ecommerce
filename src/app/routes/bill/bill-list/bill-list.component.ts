@@ -8,17 +8,14 @@ import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 import { TranslateService } from '@ngx-translate/core';
 
 import { PageHeaderComponent } from '@shared';
-import { TablesDataService } from '../data.service';
-import { ProductService } from '@core/services/product.service';
 import { tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import { ConfirmComponent } from '@shared/components/confirm/confirm.component';
+import { BillService } from '@core/services/bill.service';
 
 @Component({
-  selector: 'app-table-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.scss',
-  providers: [TablesDataService],
+  selector: 'app-table-bill-list',
+  templateUrl: './bill-list.component.html',
+  styleUrl: './bill-list.component.scss',
   standalone: true,
   imports: [
     FormsModule,
@@ -31,40 +28,59 @@ import { ConfirmComponent } from '@shared/components/confirm/confirm.component';
   ],
 })
 export class ProductListComponent implements OnInit {
-
   private readonly translate = inject(TranslateService);
   private readonly dialog = inject(MtxDialog);
 
   columns: MtxGridColumn[] = [
     {
-      header: 'Tên sản phẩm',
-      field: 'name',
+      header: 'Username',
+      field: 'userName',
       sortable: false,
       minWidth: 100,
       width: '100px',
     },
     {
-      header: 'Mã sản phẩm',
-      field: 'code',
+      header: 'FullName',
+      field: 'fullName',
       sortable: false,
       disabled: true,
       minWidth: 100,
       width: '100px',
     },
     {
-      header: 'Danh mục',
-      field: 'categoryName',
+      header: 'Phone',
+      field: 'phone',
       minWidth: 100,
     },
     {
-      header: 'Nhà cung cấp',
-      field: 'supplierName',
+      header: 'Email',
+      field: 'email',
       minWidth: 100,
     },
     {
-      header: 'Mô tả',
-      field: 'description',
-      minWidth: 300,
+      header: 'Total',
+      field: 'total',
+      minWidth: 100,
+    },
+    {
+      header: 'Amount',
+      field: 'amount',
+      minWidth: 100,
+    },
+    {
+      header: 'Tax',
+      field: 'tax',
+      minWidth: 100,
+    },
+    {
+      header: 'Created At',
+      field: 'createdAt',
+      minWidth: 100,
+    },
+    {
+      header: 'Note',
+      field: 'note ',
+      minWidth: 200,
     },
     {
       header: 'Hành động',
@@ -110,7 +126,7 @@ export class ProductListComponent implements OnInit {
   showPaginator = true;
   expandable = false;
   columnResizable = false;
-  private productService = inject(ProductService);
+  private billService = inject(BillService);
   category: any[] = [];
   products: any[] = [];
   ngOnInit() {
@@ -119,27 +135,20 @@ export class ProductListComponent implements OnInit {
   }
 
   getData() {
-    this.productService
+    this.billService
       .getAll({})
       .pipe(
         tap(value => {
           console.log(value);
         })
       )
-      .subscribe(value => {
+      .subscribe((value:any) => {
         this.products = value.data;
       });
   }
 
   delete(value: any) {
-    this.dialog.confirm(`Delete product!`,"Are you sure want delete product?",()=>{
-      console.log("ok")
-      this.productService.delete(value.id).subscribe(data => {
-      this.dialog.alert("Delete success.")
-      },()=>{
-        this.dialog.alert("Delete error.")
-      })
-    });
+    this.dialog.alert(`You have deleted ${value.position}!`);
   }
 
   changeSelect(e: any) {
@@ -164,19 +173,4 @@ export class ProductListComponent implements OnInit {
   updateList() {
     this.list = this.list.splice(-1).concat(this.list);
   }
-
-  // constructor(public dialog: MatDialog) {}
-
-  // openConfirmDialog(): void {
-  //   const dialogRef = this.dialog.open(ConfirmComponent);
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       // Xử lý logic xóa ở đây
-  //       console.log('Đã xóa thành công!');
-  //     } else {
-  //       console.log('Hủy xóa!');
-  //     }
-  //   });
-  // }
 }

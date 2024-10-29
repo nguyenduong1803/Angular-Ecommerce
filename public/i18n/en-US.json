@@ -8,6 +8,17 @@
     "product": "Product",
     "product.list": "Product list",
     "product.category": "Category list",
+
+    "category": "Category",
+    "category.list": "Category list",
+
+    "bill": "Bill",
+    "bill.list": "Bill list",
+
+    "supplier": "Supplier",
+    "supplier.list": "Supplier list",
+
+
     "material.form-controls": "Form Controls",
     "material.form-controls.autocomplete": "Autocomplete",
     "material.form-controls.checkbox": "Checkbox",

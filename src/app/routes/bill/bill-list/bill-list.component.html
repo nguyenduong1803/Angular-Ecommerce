@@ -1,0 +1,32 @@
+<!-- <page-header class="bg-green-50" /> -->
+
+<div class="m-y-8 flex flex-end">
+  <a routerLink="/admin/product/save/add" mat-flat-button>Create</a>
+</div>
+
+<mtx-grid [data]="products"
+          [columns]="columns"
+          [loading]="isLoading"
+          [columnResizable]="columnResizable"
+          [multiSelectable]="multiSelectable"
+          [rowSelectable]="rowSelectable"
+          [hideRowSelectionCheckbox]="hideRowSelectionCheckbox"
+          [rowHover]="rowHover"
+          [rowStriped]="rowStriped"
+          [showToolbar]="showToolbar"
+          [toolbarTitle]="'Data Grid Toolbar'"
+          [columnHideable]="columnHideable"
+          [columnSortable]="columnSortable"
+          [columnPinnable]="columnPinnable"
+          [expandable]="expandable"
+          [expansionTemplate]="expansionTpl"
+          [pageOnFront]="showPaginator"
+          [showPaginator]="showPaginator"
+          [pageSizeOptions]="[5,10,50,100]"
+          [pageIndex]="0"
+          [pageSize]="5"
+          (sortChange)="changeSort($event)"
+          (selectionChange)="changeSelect($event)" />
+<ng-template #expansionTpl let-row>
+  {{row.name}}
+</ng-template>

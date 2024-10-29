@@ -1,0 +1,47 @@
+<!-- <page-header /> -->
+
+<div class="row">
+  <div class="col-sm-8">
+    <mat-card class="bg-white">
+      <mat-card-header>
+        <mat-card-title>Form Product</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="reactiveForm" class="form-field-full">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Supplier name</mat-label>
+            <input matInput formControlName="name">
+              <mat-error *ngIf="(reactiveForm.get('name')?.invalid)">{{'validation.required' | translate}}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Upload Logo</mat-label>
+            <input matInput readonly [value]="fileName || 'No file selected'" />
+            <button mat-icon-button matSuffix (click)="fileInput.click()">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+            <input
+              #fileInput
+              type="file"
+              hidden
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              multiple
+            />
+          </mat-form-field>
+
+          <div class="m-t-8 d-flex justify-content-end">
+            <button mat-button class="m-x-8" type="button">Cancel</button>
+            <button mat-flat-button type="submit"  (click)="onSubmit()">Save</button>
+          </div>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-sm-4">
+
+  </div>
+</div>

@@ -1,6 +1,5 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
-  FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -24,10 +23,9 @@ import { SupplierService } from '@core/services/supplier.service';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@core/services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-forms-saveForm',
+  selector: 'app-forms-bill-saveForm',
   templateUrl: './saveForm.component.html',
   styleUrl: './saveForm.component.scss',
   standalone: true,
@@ -48,15 +46,7 @@ import { ActivatedRoute } from '@angular/router';
   ],
 })
 export class SaveFormComponent implements OnInit, OnDestroy {
-  @ViewChild('myButton') myButton!: any;
-  productForm: FormGroup;
-  constructor(private snackBar: MatSnackBar, private route: ActivatedRoute) {
-    this.productForm = this.fb.group({
-      products: this.fb.array([])
-    });
-
-    this.addProduct();
-  }
+  constructor(private snackBar: MatSnackBar) {}
 
   private readonly fb = inject(FormBuilder);
   private readonly dateAdapter = inject(DateAdapter);
@@ -73,9 +63,6 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     description: [''],
     UpdateImages: [null],
   });
-  productId: string | null = null;
-  isCreate = true;
-
   category: any[] = [];
   supplier: any[] = [];
   fileName: string = '';
@@ -87,7 +74,6 @@ export class SaveFormComponent implements OnInit, OnDestroy {
       this.dateAdapter.setLocale(res.lang);
     });
     this.getCategory();
-    this.getParams()
     this.getSupplier();
   }
 
@@ -110,24 +96,16 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     }
   }
   onSubmit() {
-    // click submit
-    if (this.myButton._elementRef.nativeElement) {
-      this.myButton._elementRef.nativeElement.click();
-    }
-
-    if (this.reactiveForm.valid && this.productForm.valid) {
+    if (this.reactiveForm.valid) {
       console.log('Form Submitted!', this.reactiveForm.value);
       // Thực hiện các hành động như gọi API
       const formData = new FormData()
       const {value:{categoryId,code,description,name,supplierId}} = this.reactiveForm;
-      const {value:{ products }} = this.productForm;
-      const parseOption = JSON.stringify(products)
       formData.append("name", name || "")
       formData.append("code", code || "")
       formData.append("categoryId", categoryId || "")
       formData.append("supplierId", supplierId || "")
       formData.append("description", description || "")
-      formData.append("options", parseOption || "")
       if (this.selectedFiles) {
         for (let i = 0; i < this.selectedFiles.length; i++) {
           formData.append('UpdateImages', this.selectedFiles[i]);
@@ -155,8 +133,6 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   getCategory() {
     this.categoryService
       .getAll({})
@@ -181,71 +157,11 @@ export class SaveFormComponent implements OnInit, OnDestroy {
         this.supplier = value as any;
       });
   }
-  getParams(){
-    this.route.paramMap.subscribe(params => {
-      if(params.get('id') === "add"){
-        this.isCreate = true;
-      }else{
-        this.productId = params.get('id');
-        this.getDetailData(params.get('id') || "")
-      }
-      console.log('Product ID:', this.productId);
-    });
+  getErrorMessage(form: FormGroup<ControlsOf<IProfile>>) {
+    return form.get('email')?.hasError('required')
+      ? 'validation.required'
+      : form.get('email')?.hasError('email')
+        ? 'validation.invalid_email'
+        : '';
   }
-
-  getDetailData(id:string){
-    this.productService.getDetail(id).subscribe(data => {
-    })
-  }
-
-
-// FormArray
-get products() {
-  return this.productForm.get('products') as FormArray;
-}
-
-// Tạo một product form group
-createProduct(): FormGroup {
-  return this.fb.group({
-    name: ['', Validators.required],
-    price: ['', [Validators.required, Validators.min(0)]],
-    quantity: ['', [Validators.required, Validators.min(0)]],
-    configuration: this.fb.array([])
-  });
-}
-
-// Tạo một configuration form group
-createConfiguration(): FormGroup {
-  return this.fb.group({
-    key: ['', Validators.required],
-    value: ['', Validators.required]
-  });
-}
-
-// Thêm product mới
-addProduct() {
-  this.products.push(this.createProduct());
-}
-
-// Xóa product
-removeProduct(index: number) {
-  this.products.removeAt(index);
-}
-
-// Lấy configuration array của một product
-getConfigurationArray(productIndex: number): FormArray {
-  return this.products.at(productIndex).get('configuration') as FormArray;
-}
-
-// Thêm configuration mới vào product
-addConfiguration(productIndex: number) {
-  const configArray = this.getConfigurationArray(productIndex);
-  configArray.push(this.createConfiguration());
-}
-
-// Xóa configuration
-removeConfiguration(productIndex: number, configIndex: number) {
-  const configArray = this.getConfigurationArray(productIndex);
-  configArray.removeAt(configIndex);
-}
 }
