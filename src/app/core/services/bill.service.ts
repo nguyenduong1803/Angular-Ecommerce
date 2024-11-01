@@ -17,4 +17,7 @@ export class BillService {
   getAll(params: any) {
     return this.http.get(baseUrl + 'Bill/Paging', { params });
   }
+  getDetail(id: any) {
+    return this.http.get(baseUrl + 'Bill', { params:{id} });
+  }
 }

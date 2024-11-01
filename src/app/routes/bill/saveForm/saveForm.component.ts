@@ -23,6 +23,8 @@ import { SupplierService } from '@core/services/supplier.service';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@core/services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { BillService } from '@core/services/bill.service';
 
 @Component({
   selector: 'app-forms-bill-saveForm',
@@ -46,7 +48,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class SaveFormComponent implements OnInit, OnDestroy {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private route: ActivatedRoute) {}
 
   private readonly fb = inject(FormBuilder);
   private readonly dateAdapter = inject(DateAdapter);
@@ -54,6 +56,9 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   private categoryService = inject(CategoryService);
   private productService = inject(ProductService);
   private supplierService = inject(SupplierService);
+  private billService = inject(BillService);
+  bill:any = {};
+  billId:any = "";
 
   reactiveForm = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
@@ -75,6 +80,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     });
     this.getCategory();
     this.getSupplier();
+    this.getParams()
   }
 
   ngOnDestroy() {
@@ -99,20 +105,8 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     if (this.reactiveForm.valid) {
       console.log('Form Submitted!', this.reactiveForm.value);
       // Thực hiện các hành động như gọi API
-      const formData = new FormData()
-      const {value:{categoryId,code,description,name,supplierId}} = this.reactiveForm;
-      formData.append("name", name || "")
-      formData.append("code", code || "")
-      formData.append("categoryId", categoryId || "")
-      formData.append("supplierId", supplierId || "")
-      formData.append("description", description || "")
-      if (this.selectedFiles) {
-        for (let i = 0; i < this.selectedFiles.length; i++) {
-          formData.append('UpdateImages', this.selectedFiles[i]);
-        }
-      }
-      console.log(formData)
-      this.productService.create(formData).subscribe((value)=>{
+
+      this.billService.create(this.reactiveForm.value).subscribe((value)=>{
         this.snackBar.open('create success', 'Close', {
           duration: 3000,
           horizontalPosition: 'right',
@@ -157,11 +151,18 @@ export class SaveFormComponent implements OnInit, OnDestroy {
         this.supplier = value as any;
       });
   }
-  getErrorMessage(form: FormGroup<ControlsOf<IProfile>>) {
-    return form.get('email')?.hasError('required')
-      ? 'validation.required'
-      : form.get('email')?.hasError('email')
-        ? 'validation.invalid_email'
-        : '';
+
+  getParams(){
+    this.route.paramMap.subscribe(params => {
+
+        this.billId = params.get('id');
+        this.getDetailData(params.get('id') || "")
+    });
+  }
+
+  getDetailData(id:string){
+    this.billService.getDetail(id).subscribe(data => {
+      this.bill = data
+    })
   }
 }

@@ -20,11 +20,13 @@ export class AuthService {
     switchMap(() => this.assignUser()),
     share()
   );
-
+  public role = localStorage.getItem('laptop_ecommerce_role') ? JSON.stringify(localStorage.getItem('laptop_ecommerce_role')) : ''
   init() {
     return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
   }
-
+  setRole(role: string){
+    this.role = role
+  }
   change() {
     return this.change$;
   }

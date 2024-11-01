@@ -11,7 +11,7 @@ import { MtxButtonModule } from '@ng-matero/extensions/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 
-import { AuthService } from '@core/authentication';
+import { AuthService, LoginService } from '@core/authentication';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +35,7 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthService);
+  private readonly loginService = inject(LoginService);
 
   isSubmitting = false;
 
@@ -64,7 +65,7 @@ export class LoginComponent {
       .pipe(filter(authenticated => authenticated))
       .subscribe({
         next: () => {
-          this.router.navigateByUrl('/');
+          this.handleLoginServer()
         },
         error: (errorRes: HttpErrorResponse) => {
           if (errorRes.status === 422) {
@@ -79,5 +80,17 @@ export class LoginComponent {
           this.isSubmitting = false;
         },
       });
+  }
+
+  handleLoginServer(){
+    this.loginService.loginServer(this.username.value, this.password.value).subscribe((value)=>{
+      this.router.navigateByUrl('/');
+      localStorage.setItem('laptop_ecommerce_role', value?.role)
+      this.auth.setRole(value?.role)
+    },(error) => {
+      console.log('error:', error)
+      return {
+    }
+    })
   }
 }
