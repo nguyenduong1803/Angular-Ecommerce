@@ -7,29 +7,26 @@ import { ProductService } from '@core/services/product.service';
   standalone: true,
   imports: [],
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.scss'
+  styleUrl: './product-detail.component.scss',
 })
 export class ProductDetailComponent implements OnInit {
   productId: string | null = null;
   product: any;
-  constructor( private route: ActivatedRoute) {
-
-  }
-  ngOnInit(){
-    this.getParams()
+  constructor(private route: ActivatedRoute) {}
+  ngOnInit() {
+    this.getParams();
   }
   private productService = inject(ProductService);
-  getParams(){
+  getParams() {
     this.route.paramMap.subscribe(params => {
-
-        this.productId = params.get('id');
-        this.getDetailData(params.get('id') || "")
+      this.productId = params.get('id');
+      this.getDetailData(params.get('id') || '');
     });
   }
 
-  getDetailData(id:string){
-    this.productService.getDetail(id).subscribe(data => {
-      this.product = data
-    })
+  getDetailData(id: string) {
+    this.productService.getById(id).subscribe(data => {
+      this.product = data;
+    });
   }
 }

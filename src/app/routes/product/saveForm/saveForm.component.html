@@ -92,7 +92,7 @@
 
       </mat-card-header>
       <mat-card-content>
-        <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-field-full">
+        <form [formArrayName]="productForm" (ngSubmit)="onSubmit()" class="form-field-full">
           <div formArrayName="products">
             <!-- Products Loop -->
             <div *ngFor="let product of products.controls; let i=index" [formGroupName]="i"
@@ -167,8 +167,6 @@
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
-
-
               </div>
             </div>
           </div>
