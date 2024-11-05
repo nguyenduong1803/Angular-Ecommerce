@@ -43,7 +43,7 @@
 
         <mat-checkbox formControlName="rememberMe">{{'remember_me' | translate}}</mat-checkbox>
 
-        <button class="w-full m-y-16" mat-flat-button [disabled]="!!loginForm.invalid"
+        <button class="w-full m-y-16" type="button" mat-flat-button [disabled]="!!loginForm.invalid"
           [loading]="isSubmitting" (click)="login()">{{'login' | translate}}</button>
 
         <div>

@@ -59,38 +59,26 @@ export class LoginComponent {
 
   login() {
     this.isSubmitting = true;
+      this.handleLoginServer();
+      this.isSubmitting = false;
 
-    this.auth
-      .login(this.username.value, this.password.value, this.rememberMe.value)
-      .pipe(filter(authenticated => authenticated))
-      .subscribe({
-        next: () => {
-          this.handleLoginServer()
-        },
-        error: (errorRes: HttpErrorResponse) => {
-          if (errorRes.status === 422) {
-            const form = this.loginForm;
-            const errors = errorRes.error.errors;
-            Object.keys(errors).forEach(key => {
-              form.get(key === 'email' ? 'username' : key)?.setErrors({
-                remote: errors[key][0],
-              });
-            });
-          }
-          this.isSubmitting = false;
-        },
-      });
   }
 
   handleLoginServer(){
     this.loginService.loginServer(this.username.value, this.password.value).subscribe((value)=>{
-      this.router.navigateByUrl('/');
-      localStorage.setItem('laptop_ecommerce_role', value?.role)
-      this.auth.setRole(value?.role)
-    },(error) => {
-      console.log('error:', error)
-      return {
-    }
-    })
+      // this.router.navigateByUrl('/');
+      console.log(value);
+      if(value){
+        localStorage.setItem('laptop_ecommerce_role', value?.role);
+        localStorage.setItem('laptop_ecommerce_token', value?.token);
+        this.auth.setRole(value?.role);
+      //   this.auth
+      // .login('ng-matero', 'ng-matero', this.rememberMe.value)
+      // .pipe(filter(authenticated => authenticated))
+      // .subscribe();
+      }
+    },(errorRes:HttpErrorResponse) => {
+      this.router.navigateByUrl('/auth/login');
+    });
   }
 }

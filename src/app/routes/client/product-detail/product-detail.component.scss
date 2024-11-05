@@ -1,0 +1,24 @@
+.option-list {
+  margin-top:12px;
+  margin-bottom:12px;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.option-item {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.option-item.active {
+  border:2px solid #06C;
+}
+
+.money{
+  margin-top:3px;
+  color: #06C;
+  font-weight: 600;
+}

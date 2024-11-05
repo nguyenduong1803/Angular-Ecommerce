@@ -78,8 +78,8 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
   category: any[] = [];
   supplier: any[] = [];
-  fileName: string = '';
-  selectedFiles:any[] = []
+  fileName = '';
+  selectedFiles:any[] = [];
   private translateSubscription = Subscription.EMPTY;
 
   ngOnInit() {
@@ -87,7 +87,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
       this.dateAdapter.setLocale(res.lang);
     });
     this.getCategory();
-    this.getParams()
+    this.getParams();
     this.getSupplier();
   }
 
@@ -118,22 +118,22 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     if (this.reactiveForm.valid && this.productForm.valid) {
       console.log('Form Submitted!', this.reactiveForm.value);
       // Thực hiện các hành động như gọi API
-      const formData = new FormData()
+      const formData = new FormData();
       const {value:{categoryId,code,description,name,supplierId}} = this.reactiveForm;
       const {value:{ products }} = this.productForm;
-      const parseOption = JSON.stringify(products)
-      formData.append("name", name || "")
-      formData.append("code", code || "")
-      formData.append("categoryId", categoryId || "")
-      formData.append("supplierId", supplierId || "")
-      formData.append("description", description || "")
-      formData.append("options", parseOption || "")
+      const parseOption = JSON.stringify(products);
+      formData.append('name', name || '');
+      formData.append('code', code || '');
+      formData.append('categoryId', categoryId || '');
+      formData.append('supplierId', supplierId || '');
+      formData.append('description', description || '');
+      formData.append('options', parseOption || '');
       if (this.selectedFiles) {
         for (let i = 0; i < this.selectedFiles.length; i++) {
           formData.append('UpdateImages', this.selectedFiles[i]);
         }
       }
-      console.log(formData)
+      console.log(formData);
       this.productService.create(formData).subscribe((value)=>{
         this.snackBar.open('create success', 'Close', {
           duration: 3000,
@@ -149,7 +149,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
           verticalPosition: 'top',
           panelClass: ['error-snackbar']
         });
-      })
+      });
     } else {
       console.log('Form is invalid');
     }
@@ -183,19 +183,19 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   }
   getParams(){
     this.route.paramMap.subscribe(params => {
-      if(params.get('id') === "add"){
+      if(params.get('id') === 'add'){
         this.isCreate = true;
       }else{
         this.productId = params.get('id');
-        this.getDetailData(params.get('id') || "")
+        this.getDetailData(params.get('id') || '');
       }
       console.log('Product ID:', this.productId);
     });
   }
 
   getDetailData(id:string){
-    this.productService.getDetail(id).subscribe(data => {
-    })
+    this.productService.getById(id).subscribe(data => {
+    });
   }
 
 
