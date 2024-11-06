@@ -17,7 +17,11 @@ export class CategoryService {
   getAll(params: any) {
     return this.http.get<any>(baseUrl + 'Category', { params });
   }
+  getById(id: any) {
+    return this.http.get<any>(baseUrl + 'Category/GetById/' + id);
+
+  }
   delete(id: string) {
-    return this.http.delete(baseUrl + 'Category', { params: { id } });
+    return this.http.delete(baseUrl + 'Category/'+id, { });
   }
 }

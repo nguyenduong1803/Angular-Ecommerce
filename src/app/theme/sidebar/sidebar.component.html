@@ -20,5 +20,14 @@
   @if (showUser) {
     <app-user-panel />
   }
-  <app-sidemenu [ripple]="showToggle" />
+  <mat-accordion>
+    <mat-expansion-panel
+    *ngFor="let item of menuList; index as i;"
+    (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="text-uppercase"> {{item.name}}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <a [routerLink]="child.route" class="item-child text-uppercase" *ngFor="let child of item.children; index as i;">{{child.name}}</a>
+    </mat-expansion-panel>
+</mat-accordion>
 </div>

@@ -18,6 +18,6 @@ export class BillService {
     return this.http.get(baseUrl + 'Bill/Paging', { params });
   }
   getDetail(id: any) {
-    return this.http.get(baseUrl + 'Bill', { params:{id} });
+    return this.http.get(baseUrl + 'Bill/'+id, );
   }
 }

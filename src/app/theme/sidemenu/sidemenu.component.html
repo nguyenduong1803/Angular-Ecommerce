@@ -1,7 +1,7 @@
 <ng-container
   [ngTemplateOutlet]="menuListTpl"
   [ngTemplateOutletContext]="{menuList: menu$ | async, parentRoute: [], level: 0, expanded: true}" />
-
+<!--
 <ng-template #menuListTpl
   let-menuList="menuList" let-parentRoute="parentRoute" let-level="level" let-expanded="expanded">
   <ul navAccordion class="matero-sidemenu level-{{level}}" [class.submenu]="level>0"
@@ -58,7 +58,7 @@
       </ng-template>
     }
   </ul>
-</ng-template>
+</ng-template> -->
 
 <ng-template #linkTypeTpl let-item="item" let-level="level">
   @if (item.icon) {

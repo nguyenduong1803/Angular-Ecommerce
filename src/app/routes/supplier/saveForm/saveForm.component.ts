@@ -20,6 +20,7 @@ import { PageHeaderComponent } from '@shared';
 import { SupplierService } from '@core/services/supplier.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-forms-supplier-saveForm',
@@ -43,7 +44,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class SaveFormComponent implements OnInit, OnDestroy {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private route: ActivatedRoute) {}
 
   private readonly fb = inject(FormBuilder);
   private readonly dateAdapter = inject(DateAdapter);
@@ -56,8 +57,12 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   });
   category: any[] = [];
   supplier: any[] = [];
-  fileName: string = '';
-  selectedFiles:any[] = []
+  fileName = '';
+  selectedFiles:any[] = [];
+
+  supplierId: string | null = null;
+  isCreate = false;
+
   private translateSubscription = Subscription.EMPTY;
 
   ngOnInit() {
@@ -88,34 +93,70 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     if (this.reactiveForm.valid) {
       console.log('Form Submitted!', this.reactiveForm.value);
       // Thực hiện các hành động như gọi API
-      const formData = new FormData()
+      const formData = new FormData();
       const {value:{name}} = this.reactiveForm;
-      formData.append("name", name || "")
+      formData.append('name', name || '');
       if (this.selectedFiles) {
         for (let i = 0; i < this.selectedFiles.length; i++) {
           formData.append('UpdateImages', this.selectedFiles[i]);
         }
       }
-      console.log(formData)
-      this.supplierService.create(formData).subscribe((value)=>{
-        this.snackBar.open('create success', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar']
+      if(this.isCreate){
+
+        this.supplierService.create(formData).subscribe((value)=>{
+          this.snackBar.open('create success', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.reactiveForm.reset();
+        },()=>{
+          this.snackBar.open('Something went wrong', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         });
-        this.reactiveForm.reset();
-      },()=>{
-        this.snackBar.open('Something went wrong', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar']
+      }else{
+        this.supplierService.create({...formData,id:this.supplierId}).subscribe((value)=>{
+          this.snackBar.open('update success', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.reactiveForm.reset();
+        },()=>{
+          this.snackBar.open('Something went wrong', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         });
-      })
+      }
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  getParams(){
+    this.route.paramMap.subscribe(params => {
+      if(params.get('id') === 'add'){
+        this.isCreate = true;
+      }else{
+        this.supplierId = params.get('id');
+        this.getDetailData(params.get('id') || '');
+      }
+    });
+  }
+
+  getDetailData(id:string){
+    this.supplierService.getById(id).subscribe(data => {
+      this.reactiveForm.reset(data.data);
+    });
   }
 
 }

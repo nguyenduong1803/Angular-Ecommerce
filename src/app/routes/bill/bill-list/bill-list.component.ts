@@ -27,7 +27,7 @@ import { BillService } from '@core/services/bill.service';
     RouterLink
   ],
 })
-export class ProductListComponent implements OnInit {
+export class BillListComponent implements OnInit {
   private readonly translate = inject(TranslateService);
   private readonly dialog = inject(MtxDialog);
 
@@ -95,18 +95,6 @@ export class ProductListComponent implements OnInit {
           icon: 'edit',
           tooltip: this.translate.stream('edit'),
           click: record => {},
-        },
-        {
-          type: 'icon',
-          color: 'warn',
-          icon: 'delete',
-          tooltip: this.translate.stream('delete'),
-          pop: {
-            title: this.translate.stream('confirm_delete'),
-            closeText: this.translate.stream('close'),
-            okText: this.translate.stream('ok'),
-          },
-          click: record => this.delete(record),
         },
       ],
     },

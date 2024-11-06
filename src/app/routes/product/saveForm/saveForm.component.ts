@@ -74,7 +74,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     UpdateImages: [null],
   });
   productId: string | null = null;
-  isCreate = true;
+  isCreate = false;
 
   category: any[] = [];
   supplier: any[] = [];
@@ -134,22 +134,43 @@ export class SaveFormComponent implements OnInit, OnDestroy {
         }
       }
       console.log(formData);
-      this.productService.create(formData).subscribe((value)=>{
-        this.snackBar.open('create success', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar']
+      console.log(this.isCreate);
+
+      if(this.isCreate){
+        this.productService.create(formData).subscribe((value)=>{
+          this.snackBar.open('create success', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.reactiveForm.reset();
+        },()=>{
+          this.snackBar.open('Something went wrong', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         });
-        this.reactiveForm.reset();
-      },()=>{
-        this.snackBar.open('Something went wrong', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar']
+      }else{
+        this.productService.update({...formData,id:this.productId}).subscribe((value)=>{
+          this.snackBar.open('update success', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.reactiveForm.reset();
+        },()=>{
+          this.snackBar.open('Something went wrong', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         });
-      });
+      }
     } else {
       console.log('Form is invalid');
     }
@@ -195,6 +216,24 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
   getDetailData(id:string){
     this.productService.getById(id).subscribe(data => {
+      this.reactiveForm.reset(data.data);
+      this.productForm.reset({products:data.data.options});
+
+      const productsArray = this.productForm.get('products') as FormArray;
+  productsArray.clear();
+
+  data.data.options.forEach((product:any )=> {
+    productsArray.push(this.fb.group({
+      id: [product.id],
+      name: [product.name],
+      price: [product.price],
+      quantity: [product.quantity],
+      configuration: [product.configuration],
+      productId: [product.productId],
+      product: [product.product]  // Có thể là null hoặc một giá trị khác
+    }));
+  });
+
     });
   }
 

@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { PageHeaderComponent } from '@shared';
 import { tap } from 'rxjs';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CategoryService } from '@core/services/categogy.service';
 
 @Component({
@@ -30,7 +30,7 @@ import { CategoryService } from '@core/services/categogy.service';
 export class ProductListComponent implements OnInit {
   private readonly translate = inject(TranslateService);
   private readonly dialog = inject(MtxDialog);
-
+  constructor(private router: Router) { }
   columns: MtxGridColumn[] = [
     {
       header: 'Category name',
@@ -48,7 +48,7 @@ export class ProductListComponent implements OnInit {
       width: '200px',
     },
     {
-      header: 'Hành động',
+      header: 'Action',
       field: 'operation',
       minWidth: 140,
       width: '140px',
@@ -59,7 +59,10 @@ export class ProductListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           tooltip: this.translate.stream('edit'),
-          click: record => {},
+          click: record => {
+            console.log('record:', record);
+            this.router.navigate([`admin/category/save`, record.id ]);
+          },
         },
         {
           type: 'icon',
@@ -96,6 +99,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.isLoading = false;
     this.getData();
+    console.log(this.category);
   }
 
   getData() {
@@ -107,18 +111,20 @@ export class ProductListComponent implements OnInit {
         })
       )
       .subscribe(value => {
-        this.category = value.data;
+        console.log(value);
+        this.category = value;
+
       });
   }
 
   delete(value: any) {
-    this.dialog.confirm(`Delete category!`,"Are you sure want delete category?",()=>{
-      console.log("ok")
+    this.dialog.confirm(`Delete category!`,'Are you sure want delete category?',()=>{
+      console.log('ok');
       this.categoryService.delete(value.id).subscribe(data => {
-      this.dialog.alert("Delete success.")
+      this.dialog.alert('Delete success.');
       },()=>{
-        this.dialog.alert("Delete error.")
-      })
+        this.dialog.alert('Delete error.');
+      });
     });
   }
 

@@ -23,13 +23,14 @@ export class TokenInterceptor implements HttpInterceptor {
         this.router.navigateByUrl('/dashboard');
       }
     };
+    const token = localStorage.getItem('laptop_ecommerce_token');
+    if (token) {
 
-    if (this.tokenService.valid() && this.shouldAppendToken(req.url)) {
       return next
         .handle(
           req.clone({
-            headers: req.headers.append('Authorization', this.tokenService.getBearerToken()),
-            withCredentials: true,
+            headers: req.headers.append('Authorization', `Bearer ${token}`),
+            // withCredentials: true,
           })
         )
         .pipe(

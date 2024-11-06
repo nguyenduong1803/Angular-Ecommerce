@@ -19,6 +19,9 @@ export class SupplierService {
   getAll(params: any) {
     return this.http.get(baseUrl + 'Supplier', { params });
   }
+  getById(id: any) {
+    return this.http.get<any>(baseUrl + 'Supplier/GetById/' + id);
+  }
   delete(id: string) {
     return this.http.delete(baseUrl + 'Supplier', { params: { id } });
   }

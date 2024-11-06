@@ -11,7 +11,7 @@ import { PageHeaderComponent } from '@shared';
 import { TablesDataService } from '../data.service';
 import { ProductService } from '@core/services/product.service';
 import { tap } from 'rxjs';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ConfirmComponent } from '@shared/components/confirm/confirm.component';
 
 @Component({
@@ -34,7 +34,7 @@ export class ProductListComponent implements OnInit {
 
   private readonly translate = inject(TranslateService);
   private readonly dialog = inject(MtxDialog);
-
+  private readonly router = inject(Router);
   columns: MtxGridColumn[] = [
     {
       header: 'Tên sản phẩm',
@@ -78,7 +78,9 @@ export class ProductListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           tooltip: this.translate.stream('edit'),
-          click: record => {},
+          click: record => {
+            this.router.navigateByUrl('/admin/product/save/'+record.id);
+          },
         },
         {
           type: 'icon',
@@ -132,13 +134,13 @@ export class ProductListComponent implements OnInit {
   }
 
   delete(value: any) {
-    this.dialog.confirm(`Delete product!`,"Are you sure want delete product?",()=>{
-      console.log("ok")
+    this.dialog.confirm(`Delete product!`,'Are you sure want delete product?',()=>{
+      console.log('ok');
       this.productService.delete(value.id).subscribe(data => {
-      this.dialog.alert("Delete success.")
+      this.dialog.alert('Delete success.');
       },()=>{
-        this.dialog.alert("Delete error.")
-      })
+        this.dialog.alert('Delete error.');
+      });
     });
   }
 

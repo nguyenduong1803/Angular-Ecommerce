@@ -17,7 +17,10 @@ export class CartService {
   getAll(params: any) {
     return this.http.get(baseUrl + 'Cart/Paging', { params });
   }
+  getByUser(params: any) {
+    return this.http.get(baseUrl + 'Cart/CartByUser', { params });
+  }
   delete(id: string) {
-    return this.http.delete(baseUrl + 'Cart', { params: { id } });
+    return this.http.delete(baseUrl + 'Cart/'+id, );
   }
 }

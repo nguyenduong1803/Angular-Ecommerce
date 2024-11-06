@@ -20,6 +20,7 @@ import { CategoryService } from '@core/services/categogy.service';
 import { PageHeaderComponent } from '@shared';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-forms-category-saveForm',
@@ -43,7 +44,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class SaveFormComponent implements OnInit, OnDestroy {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar,private route: ActivatedRoute) {}
 
   private readonly fb = inject(FormBuilder);
   private readonly dateAdapter = inject(DateAdapter);
@@ -55,10 +56,11 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   });
   category: any[] = [];
   supplier: any[] = [];
-  fileName: string = '';
-  selectedFiles:any[] = []
+  fileName = '';
+  selectedFiles:any[] = [];
   private translateSubscription = Subscription.EMPTY;
-
+  categoryId: string | null = null;
+  isCreate = false;
   ngOnInit() {
     this.translateSubscription = this.translate.onLangChange.subscribe((res: { lang: any }) => {
       this.dateAdapter.setLocale(res.lang);
@@ -74,25 +76,59 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     if (this.reactiveForm.valid) {
       console.log('Form Submitted!', this.reactiveForm.value);
 
-      this.categoryService.create(this.reactiveForm.value).subscribe((value)=>{
-        this.snackBar.open('create success', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar']
+      if(this.isCreate){
+        this.categoryService.create(this.reactiveForm.value).subscribe((value)=>{
+          this.snackBar.open('create success', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.reactiveForm.reset();
+        },()=>{
+          this.snackBar.open('Something went wrong', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         });
-        this.reactiveForm.reset();
-      },()=>{
-        this.snackBar.open('Something went wrong', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar']
+      }else{
+        this.categoryService.update({...this.reactiveForm.value,id: this.categoryId}).subscribe((value)=>{
+          this.snackBar.open('create success', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
+          this.reactiveForm.reset();
+        },()=>{
+          this.snackBar.open('Something went wrong', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         });
-      })
+      }
     } else {
       console.log('Form is invalid');
     }
   }
+  getParams(){
+    this.route.paramMap.subscribe(params => {
+      if(params.get('id') === 'add'){
+        this.isCreate = true;
+      }else{
+        this.categoryId = params.get('id');
+        this.getDetailData(params.get('id') || '');
+      }
+    });
+  }
 
+  getDetailData(id:string){
+    this.categoryService.getById(id).subscribe(data => {
+      this.reactiveForm.reset(data.data);
+    });
+  }
 }

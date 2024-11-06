@@ -72,10 +72,12 @@ export class LoginComponent {
         localStorage.setItem('laptop_ecommerce_role', value?.role);
         localStorage.setItem('laptop_ecommerce_token', value?.token);
         this.auth.setRole(value?.role);
-      //   this.auth
-      // .login('ng-matero', 'ng-matero', this.rememberMe.value)
-      // .pipe(filter(authenticated => authenticated))
-      // .subscribe();
+        if(value?.role ==='Admin'){
+          this.router.navigateByUrl('/admin');
+        }else{
+          this.router.navigateByUrl('/');
+        }
+
       }
     },(errorRes:HttpErrorResponse) => {
       this.router.navigateByUrl('/auth/login');

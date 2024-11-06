@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnInit,
   ViewEncapsulation,
   inject,
 } from '@angular/core';
@@ -23,7 +24,7 @@ import { NavAccordionDirective } from './nav-accordion.directive';
   templateUrl: './sidemenu.component.html',
   styleUrl: './sidemenu.component.scss',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     AsyncPipe,
@@ -50,13 +51,116 @@ import { NavAccordionDirective } from './nav-accordion.directive';
     ]),
   ],
 })
-export class SidemenuComponent {
+export class SidemenuComponent implements OnInit {
   // The ripple effect makes page flashing on mobile
   @Input() ripple = false;
 
   private readonly menu = inject(MenuService);
+  ngOnInit(): void {
+    console.log('menu:', this.menuList);
+  }
+  menuList = [
+    {
+      route: 'dashboard',
+      name: 'dashboard',
+      type: 'link',
+      icon: 'dashboard',
+      badge: {
+        color: 'red-50',
+        value: '5'
+      }
+    },
 
-  menu$ = this.menu.getAll();
+    {
+      route: 'admin/product',
+      name: 'product',
+      type: 'sub',
+      icon: 'format_line_spacing',
+      children: [
+        {
+          route: 'list',
+          name: 'list',
+          type: 'link'
+        },
+        {
+          route: 'remote-data',
+          name: 'category',
+          type: 'link'
+        }
+      ],
+      permissions: {
+        except: 'GUEST'
+      }
+    },
 
-  buildRoute = this.menu.buildRoute;
+    {
+      route: 'admin/category',
+      name: 'category',
+      type: 'sub',
+      icon: 'all_inbox',
+      children: [
+        {
+          route: 'list',
+          name: 'list',
+          type: 'link'
+        },
+        {
+          route: 'remote-data',
+          name: 'category',
+          type: 'link'
+        }
+      ],
+      permissions: {
+        except: 'GUEST'
+      }
+    },
+
+    {
+      route: 'admin/bill',
+      name: 'bill',
+      type: 'sub',
+      icon: 'format_line_spacing',
+      children: [
+        {
+          route: 'list',
+          name: 'list',
+          type: 'link'
+        },
+        {
+          route: 'remote-data',
+          name: 'bill',
+          type: 'link'
+        }
+      ],
+      permissions: {
+        except: 'GUEST'
+      }
+    },
+
+    {
+      route: 'admin/supplier',
+      name: 'supplier',
+      type: 'sub',
+      icon: 'favorite',
+      children: [
+        {
+          route: 'list',
+          name: 'list',
+          type: 'link'
+        },
+        {
+          route: 'remote-data',
+          name: 'supplier',
+          type: 'link'
+        }
+      ],
+      permissions: {
+        except: 'GUEST'
+      }
+    },
+  ];
+
+  // menu$ = this.menu.getAll();
+
+  // buildRoute = this.menu.buildRoute;
 }
