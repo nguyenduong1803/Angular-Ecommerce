@@ -37,14 +37,14 @@ export class ProductListComponent implements OnInit {
   private readonly router = inject(Router);
   columns: MtxGridColumn[] = [
     {
-      header: 'Tên sản phẩm',
+      header: 'Product name',
       field: 'name',
       sortable: false,
       minWidth: 100,
       width: '100px',
     },
     {
-      header: 'Mã sản phẩm',
+      header: 'Code',
       field: 'code',
       sortable: false,
       disabled: true,
@@ -52,22 +52,22 @@ export class ProductListComponent implements OnInit {
       width: '100px',
     },
     {
-      header: 'Danh mục',
+      header: 'Category',
       field: 'categoryName',
       minWidth: 100,
     },
     {
-      header: 'Nhà cung cấp',
+      header: 'Supplier',
       field: 'supplierName',
       minWidth: 100,
     },
     {
-      header: 'Mô tả',
+      header: 'Description',
       field: 'description',
       minWidth: 300,
     },
     {
-      header: 'Hành động',
+      header: 'Action',
       field: 'operation',
       minWidth: 140,
       width: '140px',

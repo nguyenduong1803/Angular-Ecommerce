@@ -45,9 +45,28 @@
           }
         </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>fullName</mat-label>
+          <input matInput formControlName="fullName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>email</mat-label>
+          <input matInput formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>phone</mat-label>
+          <input matInput formControlName="phone">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>address</mat-label>
+          <input matInput formControlName="address">
+        </mat-form-field>
+
         <mat-checkbox>{{'read_and_agree' | translate}}</mat-checkbox>
 
-        <button class="w-full m-y-16" mat-flat-button>{{'register' | translate}}</button>
+        <button class="w-full m-y-16" mat-flat-button (click)="handleSignUp()">{{'register' | translate}}</button>
 
         <div>
           <span>{{'have_an_account' | translate}}? </span>

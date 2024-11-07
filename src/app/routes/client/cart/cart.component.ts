@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class CartComponent implements OnInit{
   private cartService = inject(CartService);
   orderForm: FormGroup;
-
+  carts:any[] = [];
   constructor(private fb: FormBuilder) {
     this.orderForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -40,13 +40,12 @@ export class CartComponent implements OnInit{
   ngOnInit(): void {
     this.getData();
   }
-  carts:any[] = [];
   getData() {
     this.cartService
       .getByUser({})
       .subscribe(value => {
         console.log('value:', value);
-        // this.carts = value;
+        this.carts = value.options;
       });
   }
 }

@@ -83,7 +83,7 @@ export class BillListComponent implements OnInit {
       minWidth: 200,
     },
     {
-      header: 'Hành động',
+      header: 'Action',
       field: 'operation',
       minWidth: 140,
       width: '140px',
