@@ -17,7 +17,7 @@
             <div class="sublist-toggle"></div>
           </li>
           <li class="topic-items">
-            <a href="/dich-vu">Service </a>
+            <a [routerLink]="['/services']">Service </a>
           </li>
           <li class="topic-items-news"><a [routerLink]="['/news']"> News </a></li>
           <li class="menu-news-items" style="margin-bottom: 0">
@@ -544,12 +544,27 @@
           <span class="cart-count">2</span> <!-- Hiển thị số lượng giỏ hàng -->
         </button>
         <ng-container *ngIf="!isLoggedIn; else loggedIn">
-          <button mat-button [routerLink]="['/login']" class="login-button">Login</button>
+          <button mat-button [routerLink]="['/auth/login']" class="login-button">Login</button>
         </ng-container>
         <ng-template #loggedIn>
-          <button mat-icon-button [routerLink]="['/profile']">
-            <mat-icon class="avatar">person</mat-icon> <!-- Biểu tượng người dùng từ Material -->
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <img class="avatar" src="https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg" width="24" alt="avatar" />
           </button>
+
+          <mat-menu #menu="matMenu">
+            <button routerLink="/profile/overview" mat-menu-item>
+              <mat-icon>account_circle</mat-icon>
+              <span>{{ 'profile'  }}</span>
+            </button>
+            <button routerLink="/admin/dashboard" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>{{ 'Management' }}</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>{{ 'logout'  }}</span>
+            </button>
+          </mat-menu>
         </ng-template>
 
       </div>

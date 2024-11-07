@@ -44,20 +44,17 @@ export class RegisterComponent {
     {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
       fullName: ['', ],
       address: ['', ],
       email: ['', ],
       phone: ['', ],
     },
-    {
-      validators: [this.matchValidator('password', 'confirmPassword')],
-    }
   );
 
   handleSignUp(){
+    const body = this.registerForm.value;
+    console.log('body:', body);
     if (this.registerForm.valid) {
-      const body = this.registerForm.value;
 
       this.loginService.signUp(body).subscribe(data => {
         this.snackBar.open('signup success', 'Close', {
@@ -67,6 +64,14 @@ export class RegisterComponent {
           panelClass: ['success-snackbar']
         });
         this.registerForm.reset();
+      },(error)=>{
+        console.log(error);
+        this.snackBar.open(error.error, 'Close', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar','error']
+        });
       });
     }
   }

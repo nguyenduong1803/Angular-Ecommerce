@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '@core/services/cart.service';
 import { ProductService } from '@core/services/product.service';
+import { MtxDialog } from '@ng-matero/extensions/dialog';
 import { tap } from 'rxjs';
 
 @Component({
@@ -18,6 +19,7 @@ export class ProductDetailComponent implements OnInit {
   product: any;
   baseImage = 'http://transytrong20.ddns.net:12345/';
   productSelected:null | number = null;
+  private readonly dialog = inject(MtxDialog);
   constructor(private route: ActivatedRoute, private snackBar: MatSnackBar) {}
   ngOnInit() {
     this.getParams();
@@ -59,7 +61,7 @@ export class ProductDetailComponent implements OnInit {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'top',
-        panelClass: ['success-snackbar']
+        panelClass: ['snackbar-container', 'success']
       });
     });
   }

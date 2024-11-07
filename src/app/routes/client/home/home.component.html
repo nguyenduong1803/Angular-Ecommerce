@@ -209,23 +209,20 @@
                 <div class="all_sub-category-grid">
                   <!-- danh mục -->
                   <div class="category-grid sub-category-grid">
-                    <div class="item-box active">
+                    <div class="item-box active" (click)="handleFilter({id:'all'},$event)" [ngClass]="{'active': categorySelected === 'all'}">
                       <div class="sub-category-item">
                         <div class="title"><a href="/mac" title="All model"> Tất cả </a></div>
                       </div>
                     </div>
-                    <div *ngFor="let item of category; index as i;"  class="item-box">
+                    <div *ngFor="let item of category; index as i;"  class="item-box" [ngClass]="{'active': categorySelected === item.id}">
                       <div class="sub-category-item">
                         <div class="title">
-                          <a href="">
+                          <a href="" (click)="handleFilter(item,$event)">
                             {{item.name}}
                           </a>
                         </div>
                       </div>
                     </div>
-
-
-
                   </div>
                 </div>
                 <div class="products-container">
@@ -262,10 +259,10 @@
                               <div class="add-info">
                                 <div class="prices">
                                   <div class="price-ratio-container">
-                                    <span class="price price-ratio">-37%</span>
+                                    <!-- <span class="price price-ratio">-37%</span> -->
                                   </div>
                                   <span class="price old-price">{{item.price}}₫</span>
-                                  <span class="price actual-price">18.250.000₫</span>
+                                  <span class="price actual-price">{{item.priceFromTo}}₫</span>
                                 </div>
                               </div>
                             </div>
@@ -274,23 +271,7 @@
 
                       </div>
                     </div>
-                    <div class="pager">
-                      <ul>
-                        <li class="current-page"><span>1</span></li>
-                        <li class="individual-page">
-                          <a data-page="2" href="https://shopdunk.com/mac?pagenumber=2">2</a>
-                        </li>
-                        <li class="individual-page">
-                          <a data-page="3" href="https://shopdunk.com/mac?pagenumber=3">3</a>
-                        </li>
-                        <li class="individual-page">
-                          <a data-page="4" href="https://shopdunk.com/mac?pagenumber=4">4</a>
-                        </li>
-                        <li class="next-page">
-                          <a data-page="2" href="https://shopdunk.com/mac?pagenumber=2">Kế tiếp</a>
-                        </li>
-                      </ul>
-                    </div>
+
                   </div>
                 </div>
                 <div class="topic-block">
@@ -301,7 +282,7 @@
                           <a href="/so-sanh-mac">
                             <img
                               title="Image Standard"
-                              src="/images/uploaded/trang danh muc/mac/Image-Standard-4.png"
+                              src="https://shopdunk.com/images/uploaded/trang%20danh%20muc/mac/Image-Standard-4.png"
                               alt="Image Standard"
                               width="142"
                               height="139"
@@ -319,7 +300,7 @@
                           <a href="/phu-kien">
                             <img
                               title="Image Standard-1"
-                              src="/images/uploaded/trang danh muc/mac/Image-Standard-5.png"
+                              src="https://shopdunk.com/images/uploaded/trang%20danh%20muc/mac/Image-Standard-5.png"
                               alt="Image Standard-1"
                               width="142"
                               height="139"

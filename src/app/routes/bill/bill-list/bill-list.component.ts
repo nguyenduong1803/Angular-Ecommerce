@@ -11,6 +11,8 @@ import { PageHeaderComponent } from '@shared';
 import { tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { BillService } from '@core/services/bill.service';
+import { BillDetailComponent } from '../bill-detail/bill-detail.component';
+import type { Bill } from '@core/types';
 
 @Component({
   selector: 'app-table-bill-list',
@@ -28,9 +30,9 @@ import { BillService } from '@core/services/bill.service';
   ],
 })
 export class BillListComponent implements OnInit {
+  [x: string]: any;
   private readonly translate = inject(TranslateService);
-  private readonly dialog = inject(MtxDialog);
-
+  constructor(private dialog: MtxDialog) {}
   columns: MtxGridColumn[] = [
     {
       header: 'Username',
@@ -75,6 +77,7 @@ export class BillListComponent implements OnInit {
     {
       header: 'Created At',
       field: 'createdAt',
+      type:'date',
       minWidth: 100,
     },
     {
@@ -95,6 +98,15 @@ export class BillListComponent implements OnInit {
           icon: 'edit',
           tooltip: this.translate.stream('edit'),
           click: record => {},
+        },
+        {
+          type: 'icon',
+          icon: 'visibility',
+          tooltip: 'View',
+          click: record => {
+            console.log('record:', record);
+            this.openBillDetail(record);
+          },
         },
       ],
     },
@@ -160,5 +172,14 @@ export class BillListComponent implements OnInit {
 
   updateList() {
     this.list = this.list.splice(-1).concat(this.list);
+  }
+
+  openBillDetail(bill: Bill) {
+    const dialogConfig = {
+      width: '600px',
+      ...bill
+    };
+
+    this.dialog.open(dialogConfig,BillDetailComponent);
   }
 }

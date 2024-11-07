@@ -20,12 +20,12 @@ export class AuthService {
     switchMap(() => this.assignUser()),
     share()
   );
-  public role = localStorage.getItem('laptop_ecommerce_role') ? JSON.stringify(localStorage.getItem('laptop_ecommerce_role')) : ''
+  public role = localStorage.getItem('laptop_ecommerce_role');
   init() {
     return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
   }
   setRole(role: string){
-    this.role = role
+    this.role = role;
   }
   change() {
     return this.change$;
@@ -39,7 +39,7 @@ export class AuthService {
     return this.loginService.login(username, password).pipe(
       tap(res => {
         // console.log(res.token);
-        this.tokenService.set(res as any)
+        this.tokenService.set(res as any);
       }),
       map(() => this.check())
     );
@@ -56,10 +56,8 @@ export class AuthService {
   }
 
   logout() {
-    return this.loginService.logout().pipe(
-      tap(() => this.tokenService.clear()),
-      map(() => !this.check())
-    );
+    localStorage.removeItem('laptop_ecommerce_token');
+    localStorage.removeItem('laptop_ecommerce_role');
   }
 
   user() {

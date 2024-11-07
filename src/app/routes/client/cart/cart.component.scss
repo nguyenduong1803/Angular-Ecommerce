@@ -1,3 +1,27 @@
 .mb-6{
   margin-bottom: 20px;
 }
+
+
+.product-picture{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wrap-check-cart{
+  min-width: 20px;
+}
+
+.error-message{
+  color:red;
+}
+
+.sidebar-cart{
+  background-color: #fff;
+}
+
+.receive_method{
+  margin-bottom: 0px !important;
+  padding-bottom: 12px;
+}

@@ -19,16 +19,17 @@ export class HomeComponent implements OnInit {
   private categoryService = inject(CategoryService);
   category: any[] = [];
   products: any[] = [];
+  categorySelected = 'all';
   baseImage = 'http://transytrong20.ddns.net:12345/';
   constructor() {}
   ngOnInit() {
-    this.getData();
+    this.getData({});
     this.getCategory();
   }
 
-  getData() {
+  getData(params = {}) {
     this.productService
-      .getAll({})
+      .getAll(params)
       .pipe(
         tap(value => {
           console.log(value);
@@ -54,5 +55,14 @@ export class HomeComponent implements OnInit {
   renderImage(url: string) {
     console.log('url:', url);
     return baseImage + 'Product/' + url;
+  }
+
+  handleFilter(category: any,event: any ){
+    event.preventDefault();
+    console.log('category:', category);
+    this.categorySelected = category.id;
+    this.getData({
+      categoryId: category.id ==='all' ? '' : category.id
+    });
   }
 }
