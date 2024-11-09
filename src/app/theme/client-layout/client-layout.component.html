@@ -539,9 +539,9 @@
           </ul>
         </div>
         <!-- cart -->
-        <button mat-icon-button [routerLink]="['/cart']">
+        <button mat-icon-button class="text-white" [routerLink]="['/cart']">
           <mat-icon class="mat-icon">shopping_cart</mat-icon>
-          <span class="cart-count">2</span> <!-- Hiển thị số lượng giỏ hàng -->
+          <!-- <span class="cart-count">2</span> -->
         </button>
         <ng-container *ngIf="!isLoggedIn; else loggedIn">
           <button mat-button [routerLink]="['/auth/login']" class="login-button">Login</button>
@@ -556,9 +556,13 @@
               <mat-icon>account_circle</mat-icon>
               <span>{{ 'profile'  }}</span>
             </button>
-            <button routerLink="/admin/dashboard" mat-menu-item>
+            <button *ngIf="isAdmin" routerLink="/admin/dashboard" mat-menu-item>
               <mat-icon>edit</mat-icon>
               <span>{{ 'Management' }}</span>
+            </button>
+            <button routerLink="/individual-bill" mat-menu-item>
+              <mat-icon>receipt</mat-icon>
+              <span>{{ 'Bill' }}</span>
             </button>
             <button mat-menu-item (click)="logout()">
               <mat-icon>exit_to_app</mat-icon>
@@ -773,7 +777,7 @@
           <div class="topic-block">
             <div class="topic-block-body">
               <p class="ft_gioithieu">
-                Năm 2020, ShopDunk trở thành đại lý ủy quyền của Apple. Chúng tôi phát triển chuỗi
+                Năm 2020 Laptopalo trở thành đại lý ủy quyền của Apple. Chúng tôi phát triển chuỗi
                 cửa hàng tiêu chuẩn và Apple Mono Store nhằm mang đến trải nghiệm tốt nhất về sản
                 phẩm và dịch vụ của Apple cho người dùng Việt Nam.
               </p>

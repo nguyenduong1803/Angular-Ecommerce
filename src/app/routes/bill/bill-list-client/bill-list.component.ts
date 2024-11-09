@@ -37,7 +37,7 @@ import { BillEditComponent } from '../edit-bill/edit-bill.component';
     RouterLink,
   ],
 })
-export class BillListComponent implements OnInit {
+export class BillListClientComponent implements OnInit {
   [x: string]: any;
   private readonly translate = inject(TranslateService);
   private readonly dialog = inject(MatDialog);
@@ -81,13 +81,13 @@ export class BillListComponent implements OnInit {
       }
     },
     {
-      header: 'Total',
-      field: 'total',
+      header: 'Payment Name',
+      field: 'paymentName',
       minWidth: 100,
     },
     {
-      header: 'Payment Name',
-      field: 'paymentName',
+      header: 'Total',
+      field: 'total',
       minWidth: 100,
     },
     {
@@ -119,14 +119,6 @@ export class BillListComponent implements OnInit {
       pinned: 'right',
       type: 'button',
       buttons: [
-        {
-          type: 'icon',
-          icon: 'edit',
-          tooltip: this.translate.stream('edit'),
-          click: record => {
-            this.openBillEdit(record);
-          },
-        },
         {
           type: 'icon',
           icon: 'visibility',
@@ -166,16 +158,14 @@ export class BillListComponent implements OnInit {
 
   getData() {
     this.billService
-      .getAll({
-        pageSize: 200
-      })
+      .getByUser()
       .pipe(
         tap(value => {
           console.log(value);
         })
       )
       .subscribe((value:any) => {
-        this.products = value.data;
+        this.products = value;
       });
   }
 

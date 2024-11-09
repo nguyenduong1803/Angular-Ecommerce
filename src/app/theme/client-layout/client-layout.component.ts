@@ -31,7 +31,7 @@ export class ClientLayoutComponent implements OnInit {
     const hasToke = localStorage.getItem('laptop_ecommerce_token');
     const isAdmin = localStorage.getItem('laptop_ecommerce_role');
     this.isAdmin = !!isAdmin;
-    this.isLoggedIn = hasToke && isAdmin ? true : false;
+    this.isLoggedIn = hasToke ? true : false;
   }
 
   logout() {

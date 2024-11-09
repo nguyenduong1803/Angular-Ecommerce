@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { PageHeaderComponent } from '@shared';
 import { tap } from 'rxjs';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SupplierService } from '@core/services/supplier.service';
 
 @Component({
@@ -30,6 +30,7 @@ import { SupplierService } from '@core/services/supplier.service';
 export class ProductListComponent implements OnInit {
   private readonly translate = inject(TranslateService);
   private readonly dialog = inject(MtxDialog);
+  private readonly router = inject(Router);
 
   columns: MtxGridColumn[] = [
     {
@@ -64,7 +65,9 @@ export class ProductListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           tooltip: this.translate.stream('edit'),
-          click: record => {},
+          click: record => {
+            this.router.navigateByUrl('/admin/supplier/save/'+record.id);
+          },
         },
         {
           type: 'icon',
@@ -105,25 +108,25 @@ export class ProductListComponent implements OnInit {
 
   getData() {
     this.supplierService
-      .getAll({})
+      .getAll({pageSize: 200})
       .pipe(
         tap(value => {
           console.log(value);
         })
       )
       .subscribe((value:any) => {
-        this.supplier = value.data;
+        this.supplier = value;
       });
   }
 
   delete(value: any) {
-    this.dialog.confirm(`Delete supplier!`,"Are you sure want delete supplier?",()=>{
-      console.log("ok")
+    this.dialog.confirm(`Delete supplier!`,'Are you sure want delete supplier?',()=>{
+      console.log('ok');
       this.supplierService.delete(value.id).subscribe(data => {
-      this.dialog.alert("Delete success.")
+      this.dialog.alert('Delete success.');
       },()=>{
-        this.dialog.alert("Delete error.")
-      })
+        this.dialog.alert('Delete error.');
+      });
     });
   }
 

@@ -149,23 +149,19 @@
                                   <div class="edit-address">
                                     <div class="tt_receive_method">Payment method</div>
                                     <div
+                                        *ngFor="let payment of paymentMethod; index as j;"
                                          class="inputs one-col receive_method">
-                                      <input type="radio"
-                                             id="receive_home"
+                                      <input
+
+                                      type="radio"
+                                            [id]="payment.id"
                                              formControlName="paymentMethod"
-                                             name="receive" value="1"
+                                             name="receive" [value]="payment.id"
                                              checked=""
                                              class="has-value"> <label
-                                             for="receive_home"
-                                             class="dot_receive_home">Online payment</label>
-                                      <input
-                                             type="radio"
-                                             id="receive_store"
-                                             formControlName="paymentMethod"
-                                             name="receive" value="0"
-                                             class="has-value"> <label
-                                             for="receive_store"
-                                             class="dot_receive_store">Cash on delivery</label>
+                                             [for]="payment.id"
+                                             class="dot_receive_home">{{payment.name}}</label>
+
                                     </div>
 
                                   </div>

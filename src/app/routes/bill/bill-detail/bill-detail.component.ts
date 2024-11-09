@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogClose, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { BILL_STATUS, billColor } from '@core';
 import { BillService } from '@core/services/bill.service';
 import type { Bill } from '@core/types';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
@@ -13,9 +14,16 @@ import { MtxSelectModule } from '@ng-matero/extensions/select';
   styleUrl: './bill-detail.component.scss',
   standalone: true,
   imports: [FormsModule, MatDialogModule, MatFormFieldModule, MtxSelectModule,MatButton,MatDialogClose],
+  providers:[
+    {
+      provide: MatDialogRef,
+      useValue: {}
+      },
+  ]
 })
 export class BillDetailComponent implements OnInit  {
   private billService = inject(BillService);
+  billStatus = BILL_STATUS;
   bill: Bill ={
     id: '',
     title: '',
@@ -33,7 +41,7 @@ export class BillDetailComponent implements OnInit  {
     total: 0,
     amount: 0,
     status: 0,
-    address: ''
+    address: '',
   };
   constructor(
     public dialogRef: MatDialogRef<BillDetailComponent>,
@@ -47,8 +55,9 @@ export class BillDetailComponent implements OnInit  {
   }
 
   getData(){
-    this.billService.getById(this.data.id).subscribe((data) => {
-      this.bill = data;
+    this.billService.getById(this.data.id).subscribe((data: any) => {
+      this.bill = data.data[0].bill;
+      console.log('data:', data.data[0]);
     });
   }
   defaultBindingsList = [
@@ -56,6 +65,15 @@ export class BillDetailComponent implements OnInit  {
     { value: 2, label: 'Kaunas' },
     { value: 3, label: 'Pavilnys', disabled: true },
   ];
+
+  getBillColor(status: any) {
+    return billColor[status as keyof typeof billColor];
+  }
+
+  getStatusLabel(status: any) {
+    console.log('status:', status);
+    return this.billStatus[status as keyof typeof this.billStatus];
+  }
 
   selectedCity = null;
 }

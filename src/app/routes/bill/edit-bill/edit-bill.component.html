@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <h2 class="text-center">Edit Bill</h2>
+  <form [formGroup]="reactiveForm" class="form-field-full">
+
+    <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status" required>
+      <mat-option *ngFor="let item of billStatusOption; index as i;"
+                  [value]="item.value">{{item.label}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="(reactiveForm.get('status')?.invalid)">{{'validation.required' |
+      translate}}</mat-error>
+  </mat-form-field>
+
+  <button mat-flat-button type="submit" (click)="onSubmit()">Save</button>
+
+  </form>
+
+</div>

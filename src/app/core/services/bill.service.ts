@@ -24,4 +24,7 @@ export class BillService {
   getById(id: any) {
     return this.http.get<Bill>(baseUrl + 'BillRecord/BillDetail/'+id, );
   }
+  getByUser() {
+    return this.http.get<Bill>(baseUrl + 'Bill/BillByUser', );
+  }
 }

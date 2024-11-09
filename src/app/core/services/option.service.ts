@@ -18,6 +18,6 @@ export class OptionService {
     return this.http.get(baseUrl + 'Option', { params });
   }
   delete(id: string) {
-    return this.http.delete(baseUrl + 'Option', { params: { id } });
+    return this.http.delete(baseUrl + 'Option/'+id);
   }
 }

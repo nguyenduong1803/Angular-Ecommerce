@@ -53,7 +53,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
   reactiveForm = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
-    UpdateImages: [null],
+    Logo: [null],
   });
   category: any[] = [];
   supplier: any[] = [];
@@ -69,6 +69,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     this.translateSubscription = this.translate.onLangChange.subscribe((res: { lang: any }) => {
       this.dateAdapter.setLocale(res.lang);
     });
+    this.getParams();
   }
 
   ngOnDestroy() {
@@ -85,7 +86,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
       // Cập nhật giá trị vào form
       this.reactiveForm.patchValue({
-        UpdateImages: this.selectedFiles as any
+        Logo: this.selectedFiles as any
       });
     }
   }
@@ -98,7 +99,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
       formData.append('name', name || '');
       if (this.selectedFiles) {
         for (let i = 0; i < this.selectedFiles.length; i++) {
-          formData.append('UpdateImages', this.selectedFiles[i]);
+          formData.append('Logo', this.selectedFiles[i]);
         }
       }
       if(this.isCreate){
@@ -155,7 +156,8 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
   getDetailData(id:string){
     this.supplierService.getById(id).subscribe(data => {
-      this.reactiveForm.reset(data.data);
+      console.log('data:', data);
+      this.reactiveForm.reset(data[0]);
     });
   }
 

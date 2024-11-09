@@ -8,8 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BillService } from '@core/services/bill.service';
+import { PaymentService } from '@core/services/payment.service';
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -25,9 +26,11 @@ import { BillService } from '@core/services/bill.service';
 })
 export class CartComponent implements OnInit{
   private cartService = inject(CartService);
-
+  private readonly router = inject(Router);
   private billService = inject(BillService);
+  private paymentService = inject(PaymentService);
   orderForm: FormGroup;
+  paymentMethod:any[] = [];
   carts:any[] = [];
   cartSelected: any[] = [];
   totalAmount = 0;
@@ -38,7 +41,8 @@ export class CartComponent implements OnInit{
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       note: [''],
-      address: ['']
+      address: [''],
+      paymentMethod: ['']
     });
   }
 
@@ -46,6 +50,17 @@ export class CartComponent implements OnInit{
     console.log(this.orderForm.value);
 
     const {fullName, phone, email} = this.orderForm.value;
+
+    if(this.cartSelected.length ===0){
+      this.snackBar.open('Please choice product!', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+
 if(!fullName || !phone || !email){
   this.snackBar.open('Please fill in completely phone, email and fullName!', 'Close', {
     duration: 3000,
@@ -62,10 +77,12 @@ if(!fullName || !phone || !email){
       verticalPosition: 'top',
       panelClass: ['error-snackbar','success']
     });
+    this.router.navigateByUrl('/individual-bill');
   });
  }
   ngOnInit(): void {
     this.getData();
+    this.getPaymentMethod();
   }
   getData() {
     this.cartService
@@ -77,12 +94,20 @@ if(!fullName || !phone || !email){
         this.computedAmount();
       });
   }
+  getPaymentMethod() {
+      this.paymentService.getAll({})
+      .subscribe((value:any) => {
+        console.log('value:', value);
+        this.paymentMethod = value.data;
+        console.log(this.paymentMethod);
+      });
+  }
 
   handleCheckbox (cart: any) {
     const cartId = cart.id;
    const index =  this.cartSelected.findIndex((cart)=> cart === cartId);
    console.log('index:', index);
-   if(index){
+   if(index !== -1){
     this.cartSelected.splice(index,1);
    }else{
     this.cartSelected.push(cartId);

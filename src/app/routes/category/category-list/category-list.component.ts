@@ -104,7 +104,9 @@ export class ProductListComponent implements OnInit {
 
   getData() {
     this.categoryService
-      .getAll({})
+      .getAll({
+        pageSize: 200
+      })
       .pipe(
         tap(value => {
           console.log(value);

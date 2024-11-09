@@ -16,4 +16,5 @@ export interface Bill {
   amount: number;
   status: number;
   address: string;
+  onCloseEdit?: () =>void
 }

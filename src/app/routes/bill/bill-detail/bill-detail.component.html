@@ -1,17 +1,15 @@
 <div mat-dialog-content>
-  <p>fullName: {{" "+bill.fullName}}</p>
-  <p>phone: {{" "+bill.phone}}</p>
-  <p>email: {{" "+bill.email}}</p>
-  <p>address: {{" "+bill.address}}</p>
-  <p>
-    By default dropdown panel is rendered as child element of ng-select, but you can append dropdown
-    to any element using <strong>appendTo</strong>.
-  </p>
-  <p>
-    If you place ng-select inside container with fixed height and hidden overflow then dropdown will
-    not be fully visible.
-  </p>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
-  </mat-dialog-actions>
+  <h2 class="text-center">Bill information</h2>
+ <div> <span class="min-w-70">fullName: </span><span>{{" "+bill.fullName}}</span></div>
+  <div>  <span class="min-w-70">phone: </span><span>{{" "+bill.phone}}</span></div>
+  <div><span class="min-w-70">email:</span> <span> {{" "+bill.email}}</span></div>
+ <div> <span class="min-w-70">address:</span><span> {{" "+bill.address}}</span></div>
+ <div>  <span class="min-w-70">status: </span> <span
+   class="status-bill"
+    [style.background-color]="getBillColor(bill.status).backgroundColor"
+   [style.color]="getBillColor(bill.status).textColor">
+   {{" "+ getStatusLabel(bill.status)}}</span>
+ </div>
+  <div><span class="min-w-70">note: </span> <span>{{" "+bill.note}}</span></div>
+
 </div>
