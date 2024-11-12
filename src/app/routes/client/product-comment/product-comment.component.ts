@@ -64,7 +64,7 @@ export class ProductCommentComponent {
   handlePageEvent(event: PageEvent) {
     // Handle page
     const {pageIndex,pageSize} = event;
-    this.refreshData({productId: this.productId,pageIndex,pageSize});
+    this.refreshData({productId: this.productId,pageIndex:pageIndex+1,pageSize});
 
   }
 

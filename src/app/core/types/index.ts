@@ -11,10 +11,12 @@ export interface Bill {
   email: string;
   note: string;
   paymentMethod: string;
-  createdAt: string;
+  createAt: string;
   total: number;
   amount: number;
   status: number;
   address: string;
+  paymentName: string;
+  billDetails: any[];
   onCloseEdit?: () =>void
 }

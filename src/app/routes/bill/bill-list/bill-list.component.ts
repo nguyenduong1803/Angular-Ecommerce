@@ -217,7 +217,7 @@ export class BillListComponent implements OnInit {
   }
   openBillEdit(bill: Bill) {
     const dialogConfig = {
-      width: '600px',
+      width: '800px',
       data:{...bill, onCloseEdit: this.onCloseEdit.bind(this)},
       panelClass: 'bill-detail',
       showCloseIcon: true,

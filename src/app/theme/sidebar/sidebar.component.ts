@@ -107,11 +107,6 @@ export class SidebarComponent {
           name: 'bill list',
           type: 'link'
         },
-        {
-          route: 'bill/save/add',
-          name: 'create bill',
-          type: 'link'
-        }
       ],
     },
 

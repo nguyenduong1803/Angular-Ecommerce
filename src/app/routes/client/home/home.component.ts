@@ -30,7 +30,9 @@ export class HomeComponent implements OnInit {
   baseImage = 'http://transytrong20.ddns.net:12345/';
   constructor() {}
   ngOnInit() {
-    this.getData({});
+    const pageIndex = this.productResponse.pageIndex;
+    const pageSize = this.productResponse.pageSize;
+    this.getData({pageIndex,pageSize});
     this.getCategory();
   }
 

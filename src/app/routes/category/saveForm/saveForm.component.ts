@@ -53,6 +53,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
   reactiveForm = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
+    id: [''],
   });
   category: any[] = [];
   supplier: any[] = [];
@@ -65,6 +66,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     this.translateSubscription = this.translate.onLangChange.subscribe((res: { lang: any }) => {
       this.dateAdapter.setLocale(res.lang);
     });
+    this.getParams();
   }
 
   ngOnDestroy() {
@@ -78,7 +80,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
       if(this.isCreate){
         this.categoryService.create(this.reactiveForm.value).subscribe((value)=>{
-          this.snackBar.open('create success', 'Close', {
+          this.snackBar.open('create category success', 'Close', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
@@ -95,7 +97,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
         });
       }else{
         this.categoryService.update({...this.reactiveForm.value,id: this.categoryId}).subscribe((value)=>{
-          this.snackBar.open('create success', 'Close', {
+          this.snackBar.open('Update category success', 'Close', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
@@ -128,7 +130,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
 
   getDetailData(id:string){
     this.categoryService.getById(id).subscribe(data => {
-      this.reactiveForm.reset(data.data);
+      this.reactiveForm.reset(data[0]);
     });
   }
 }

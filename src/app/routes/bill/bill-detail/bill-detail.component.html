@@ -4,6 +4,9 @@
   <div>  <span class="min-w-70">phone: </span><span>{{" "+bill.phone}}</span></div>
   <div><span class="min-w-70">email:</span> <span> {{" "+bill.email}}</span></div>
  <div> <span class="min-w-70">address:</span><span> {{" "+bill.address}}</span></div>
+ <div> <span class="min-w-70">payment:</span><span> {{" "+bill.paymentName
+}}</span></div>
+ <div> <span class="min-w-70">create At:</span><span> {{" "+bill.createAt}}</span></div>
  <div>  <span class="min-w-70">status: </span> <span
    class="status-bill"
     [style.background-color]="getBillColor(bill.status).backgroundColor"
@@ -12,4 +15,32 @@
  </div>
   <div><span class="min-w-70">note: </span> <span>{{" "+bill.note}}</span></div>
 
+
+<!-- product-options.component.html -->
+ <h4 class="text-center">Products: </h4>
+<div class="options-container">
+  <div class="options-list">
+    <mat-card class="option-item" *ngFor="let option of bill.billDetails">
+      <div class="option-content">
+        <div class="image-wrapper">
+          <img [src]="getFirstImage(option.image)"
+               [alt]="option.productName"
+               class="option-image">
+        </div>
+
+        <div class="info-wrapper">
+          <div class="product-info">
+            <span class="product-name">{{option.productName}}</span>
+            <span class="option-name">Option: {{option.optionName}}</span>
+          </div>
+
+          <div class="details">
+            <span class="quantity">Quantity: {{option.quantity}}</span>
+            <span class="price">Price: {{formatPrice(option.price)}}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
 </div>

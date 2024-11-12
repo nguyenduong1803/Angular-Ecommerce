@@ -9,8 +9,6 @@
 
       <mat-card-content>
         <form [formGroup]="reactiveForm" class="form-field-full">
-          <div class="row">
-            <div class="col-sm-6 col-md-12">
               <mat-form-field appearance="outline">
                 <mat-label>Product name</mat-label>
                 <input matInput formControlName="name"
@@ -18,8 +16,6 @@
                 <mat-error *ngIf="(reactiveForm.get('name')?.invalid)">{{'validation.required' |
                   translate}}</mat-error>
               </mat-form-field>
-            </div>
-          </div>
 
           <mat-form-field appearance="outline">
             <mat-label>Code</mat-label>
@@ -173,7 +169,7 @@
 
           <!-- Submit Button -->
           <div class="wrap-button">
-            <button type="submit" #myButton mat-raised-button color="accent" class="hidden-button">
+            <button type="submit" [disabled]="loading" #myButton mat-raised-button color="accent" class="hidden-button">
             </button>
           </div>
         </form>

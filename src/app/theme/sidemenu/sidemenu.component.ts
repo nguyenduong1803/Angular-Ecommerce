@@ -126,11 +126,6 @@ export class SidemenuComponent implements OnInit {
           name: 'list',
           type: 'link'
         },
-        {
-          route: 'remote-data',
-          name: 'bill',
-          type: 'link'
-        }
       ],
       permissions: {
         except: 'GUEST'

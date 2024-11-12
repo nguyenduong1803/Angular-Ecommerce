@@ -75,6 +75,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   });
   productId: string | null = null;
   isCreate = false;
+  loading = false;
 
   category: any[] = [];
   supplier: any[] = [];
@@ -116,6 +117,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
     }
 
     if (this.reactiveForm.valid && this.productForm.valid) {
+      this.loading = true;
       console.log('Form Submitted!', this.reactiveForm.value);
       // Thực hiện các hành động như gọi API
       const formData = new FormData();
@@ -133,12 +135,10 @@ export class SaveFormComponent implements OnInit, OnDestroy {
           formData.append('UpdateImages', this.selectedFiles[i]);
         }
       }
-      console.log(formData);
-      console.log(this.isCreate);
 
       if(this.isCreate){
         this.productService.create(formData).subscribe((value)=>{
-          this.snackBar.open('create success', 'Close', {
+          this.snackBar.open('Create product success!', 'Close', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
@@ -146,16 +146,16 @@ export class SaveFormComponent implements OnInit, OnDestroy {
           });
           this.reactiveForm.reset();
         },()=>{
-          this.snackBar.open('Something went wrong', 'Close', {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            panelClass: ['error-snackbar']
-          });
+          // this.snackBar.open('Something went wrong', 'Close', {
+          //   duration: 3000,
+          //   horizontalPosition: 'right',
+          //   verticalPosition: 'top',
+          //   panelClass: ['error-snackbar']
+          // });
         });
       }else{
         this.productService.update({...formData,id:this.productId}).subscribe((value)=>{
-          this.snackBar.open('update success', 'Close', {
+          this.snackBar.open('Update product success!', 'Close', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
@@ -163,14 +163,15 @@ export class SaveFormComponent implements OnInit, OnDestroy {
           });
           this.reactiveForm.reset();
         },()=>{
-          this.snackBar.open('Something went wrong', 'Close', {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            panelClass: ['error-snackbar']
-          });
+          // this.snackBar.open('Something went wrong', 'Close', {
+          //   duration: 3000,
+          //   horizontalPosition: 'right',
+          //   verticalPosition: 'top',
+          //   panelClass: ['error-snackbar']
+          // });
         });
       }
+      this.loading = false;
     } else {
       console.log('Form is invalid');
     }
