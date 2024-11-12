@@ -1,0 +1,136 @@
+// product-comment.component.scss
+.comment-section {
+  padding: 20px;
+  border-radius: 8px;
+  background: white;
+  margin: 20px 0;
+}
+
+.comment-form {
+  margin-bottom: 24px;
+
+  .full-width {
+    width: 100%;
+  }
+}
+
+.comments-list {
+  .comment-item {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    padding:10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.12);
+
+    &:last-child {
+      margin-bottom: 6px;
+    }
+  }
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+
+  .username {
+    font-weight: 500;
+    color: rgba(0,0,0,0.87);
+  }
+
+  .timestamp {
+    font-size: 12px;
+    color: rgba(0,0,0,0.54);
+  }
+}
+
+.comment-content {
+  margin: 8px 0;
+  color: rgba(0,0,0,0.87);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+
+  button {
+    color: rgba(0,0,0,0.54);
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+    }
+  }
+}
+
+mat-paginator {
+  margin-top: 20px;
+  background: transparent;
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .comment-section {
+    background: #1e1e1e;
+  }
+
+  .user-details {
+    .username {
+      color: rgba(255,255,255,0.87);
+    }
+
+    .timestamp {
+      color: rgba(255,255,255,0.54);
+    }
+  }
+
+  .comment-content {
+    color: rgba(255,255,255,0.87);
+  }
+
+  .comment-actions button {
+    color: rgba(255,255,255,0.54);
+  }
+}
+
+
+.avatar-container {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.avatar-svg {
+  width: 24px;
+  height: 24px;
+  fill: #757575;
+}

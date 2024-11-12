@@ -273,6 +273,16 @@
                     </div>
 
                   </div>
+                 <div class="wrap-pagination">
+                    <mat-paginator
+                    [length]="productResponse.total"
+                    [pageSize]="productResponse.pageSize"
+                    [pageIndex]="productResponse.pageIndex - 1"
+                    [pageSizeOptions]="[5, 10, 25, 50]"
+                    [showFirstLastButtons]="true"
+                    (page)="handlePageEvent($event)"
+                    aria-label="Select page" />
+                 </div>
                 </div>
                 <div class="topic-block">
                   <div class="topic-block-body">

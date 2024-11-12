@@ -6,19 +6,26 @@ import { CategoryService } from '@core/services/categogy.service';
 import { CommonModule } from '@angular/common';
 import { baseImage } from '@core/services/constant';
 import { RouterLink } from '@angular/router';
+import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-client-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, MatPaginatorModule],
 })
 export class HomeComponent implements OnInit {
   private productService = inject(ProductService);
   private categoryService = inject(CategoryService);
   category: any[] = [];
   products: any[] = [];
+  productResponse:any = {
+    data: [],
+    pageSize: 10,
+    pageIndex: 1,
+    total: 0
+  };
   categorySelected = 'all';
   baseImage = 'http://transytrong20.ddns.net:12345/';
   constructor() {}
@@ -27,7 +34,7 @@ export class HomeComponent implements OnInit {
     this.getCategory();
   }
 
-  getData(params = {}) {
+  getData(params:any = { limit: 200}) {
     this.productService
       .getAll(params)
       .pipe(
@@ -36,6 +43,7 @@ export class HomeComponent implements OnInit {
         })
       )
       .subscribe(value => {
+        this.productResponse = value;
         this.products = value.data;
       });
   }
@@ -52,6 +60,12 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  handlePageEvent(event: PageEvent) {
+    const pageIndex = event.pageIndex + 1;
+    const pageSize = event.pageSize;
+    this.getData({pageIndex, pageSize ,limit: 200});
+  }
+
   renderImage(url: string) {
     console.log('url:', url);
     return baseImage + 'Product/' + url;
@@ -59,10 +73,10 @@ export class HomeComponent implements OnInit {
 
   handleFilter(category: any,event: any ){
     event.preventDefault();
-    console.log('category:', category);
     this.categorySelected = category.id;
     this.getData({
-      categoryId: category.id ==='all' ? '' : category.id
+      categoryId: category.id ==='all' ? '' : category.id,
+      limit: 200
     });
   }
 }
