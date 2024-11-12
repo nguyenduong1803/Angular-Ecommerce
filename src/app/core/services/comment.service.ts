@@ -18,8 +18,8 @@ export class CommentService {
   getAll(params: any) {
     return this.http.get(baseUrl + 'Comment/Paging', { params });
   }
-  getByProductId(id: any) {
-    return this.http.get(baseUrl + 'Comment/'+id, );
+  getByProductId(params: any) {
+    return this.http.get(baseUrl + 'Comment/Paging',{params} );
   }
 
 }

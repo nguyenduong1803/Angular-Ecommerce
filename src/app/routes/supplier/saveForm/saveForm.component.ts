@@ -96,7 +96,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
       // Thực hiện các hành động như gọi API
       const formData = new FormData();
       const {value:{name}} = this.reactiveForm;
-      formData.append('name', name || '');
+      formData.append('Name', name || '');
       if (this.selectedFiles) {
         for (let i = 0; i < this.selectedFiles.length; i++) {
           formData.append('Logo', this.selectedFiles[i]);

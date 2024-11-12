@@ -42,16 +42,19 @@ export interface Comment {
 })
 export class ProductCommentComponent {
   @Input() comments: any = {};
-  @Input() refreshData!: () => void;
+  @Input() productId: any = null;
+  @Input() refreshData!: (id:any) => void;
 
   commentCtrl = new FormControl('', [Validators.required]);
   private commentService = inject(CommentService);
   onSubmitComment() {
     if (this.commentCtrl.valid) {
+      const content = this.commentCtrl.value as any;
+      const body = {content,productId:this.productId};
       // Add logic to submit comment
-      this.commentService.create(this.commentCtrl.value).subscribe((data)=>{
+      this.commentService.create(body).subscribe((data)=>{
         console.log(data);
-        this.refreshData();
+        this.refreshData({productId: this.productId});
       });
       this.commentCtrl.reset();
     }
@@ -59,9 +62,10 @@ export class ProductCommentComponent {
 
 
   handlePageEvent(event: PageEvent) {
-    // Handle page change
-    console.log(event);
-    // Emit event or call service to load new page
+    // Handle page
+    const {pageIndex,pageSize} = event;
+    this.refreshData({productId: this.productId,pageIndex,pageSize});
+
   }
 
   formatDate(dateString: string): string {

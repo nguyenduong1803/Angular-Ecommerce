@@ -27,7 +27,6 @@ comments:any ={
     {
       id: 1,
       username: 'John Doe',
-      avatarUrl: 'path/to/avatar.jpg',
       content: 'Great product! Highly recommended.',
       createdAt: '2024-10-10',
     },
@@ -41,7 +40,7 @@ comments:any ={
   ngOnInit() {
     this.getParams();
     this.getDetailData(this.productId || '');
-    // this.getComment(this.productId || '');
+    this.getComment({productId: this.productId});
 
   }
   private productService = inject(ProductService);
@@ -66,8 +65,8 @@ comments:any ={
     });
   }
 
-  getComment(productId: string){
-    this.commentService.getByProductId(productId).subscribe((data: any)=>{
+  getComment(params:any){
+    this.commentService.getByProductId(params).subscribe((data: any)=>{
       console.log(data);
       this.comments = data;
     });
