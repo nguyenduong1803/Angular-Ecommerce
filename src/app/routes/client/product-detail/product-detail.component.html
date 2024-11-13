@@ -34,7 +34,7 @@
                 >
                   <img
                     alt="media.productreivew.imagealternatetextformat"
-                    [src]="baseImage + product.image[0].url"
+                    [src]="baseImage + product?.image[0]?.url"
                     title="Ảnh của MacBook Air M3 13 inch"
                     id="main-product-img-3216"
                   />
@@ -64,7 +64,7 @@
             <div class="wrapper-info">
               <div class="product-name">
                 <h1>
-                  <span class="main-name">{{product.name}}</span>
+                  <span class="main-name">{{product?.name}}</span>
                   <span class="product-name-variant"></span>
                 </h1>
               </div>

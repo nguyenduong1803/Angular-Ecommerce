@@ -49,6 +49,7 @@ comments:any ={
   getParams() {
     this.route.paramMap.subscribe(params => {
       this.productId = params.get('id');
+    window.scrollTo(0,0);
     });
   }
 
@@ -81,7 +82,14 @@ comments:any ={
       optionId:this.productSelected,
       quantity: 1,
     }).subscribe(()=>{
-      this.snackBar.open('add to cart success', 'Close', {
+      this.snackBar.open('Add to cart success!', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: ['snackbar-container', 'success']
+      });
+    },(error)=>{
+      this.snackBar.open('Please login to add to cart.', 'Close', {
         duration: 3000,
         horizontalPosition: 'right',
         verticalPosition: 'top',
