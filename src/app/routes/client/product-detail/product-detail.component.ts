@@ -20,28 +20,30 @@ export class ProductDetailComponent implements OnInit {
   productId: string | null = null;
   product: any;
   baseImage = 'http://transytrong20.ddns.net:12345/';
-  productSelected:null | number = null;
+  productSelected: null | number = null;
   private readonly dialog = inject(MtxDialog);
-comments:any ={
-  data: [
-    {
-      id: 1,
-      username: 'John Doe',
-      content: 'Great product! Highly recommended.',
-      createdAt: '2024-10-10',
-    },
-    // ... more comments
-  ],
-  pageSize: 10,
-  pageIndex: 1,
-  total: 50 // total number of comments
-};
-  constructor(private route: ActivatedRoute, private snackBar: MatSnackBar) {}
+  comments: any = {
+    data: [
+      {
+        id: 1,
+        username: 'John Doe',
+        content: 'Great product! Highly recommended.',
+        createdAt: '2024-10-10',
+      },
+      // ... more comments
+    ],
+    pageSize: 10,
+    pageIndex: 1,
+    total: 50, // total number of comments
+  };
+  constructor(
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
+  ) {}
   ngOnInit() {
     this.getParams();
     this.getDetailData(this.productId || '');
-    this.getComment({productId: this.productId});
-
+    this.getComment({ productId: this.productId });
   }
   private productService = inject(ProductService);
   private cartService = inject(CartService);
@@ -49,7 +51,7 @@ comments:any ={
   getParams() {
     this.route.paramMap.subscribe(params => {
       this.productId = params.get('id');
-    window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     });
   }
 
@@ -60,41 +62,46 @@ comments:any ={
         this.product = data.data;
         this.productSelected = this.product.options.length > 0 ? this.product.options[0].id : null;
       },
-      error:(error)=>{
+      error: error => {
         console.log(error);
-      }
+      },
     });
   }
 
-  getComment(params:any){
-    this.commentService.getByProductId(params).subscribe((data: any)=>{
+  getComment(params: any) {
+    this.commentService.getByProductId(params).subscribe((data: any) => {
       console.log(data);
       this.comments = data;
     });
   }
 
-  setProductSelect(id:number){
+  setProductSelect(id: number) {
     this.productSelected = id;
   }
 
-  handleAddToCart(){
-    this.cartService.create({
-      optionId:this.productSelected,
-      quantity: 1,
-    }).subscribe(()=>{
-      this.snackBar.open('Add to cart success!', 'Close', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top',
-        panelClass: ['snackbar-container', 'success']
-      });
-    },(error)=>{
-      this.snackBar.open('Please login to add to cart.', 'Close', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top',
-        panelClass: ['snackbar-container', 'success']
-      });
-    });
+  handleAddToCart() {
+    this.cartService
+      .create({
+        optionId: this.productSelected,
+        quantity: 1,
+      })
+      .subscribe(
+        () => {
+          this.snackBar.open('Add to cart success!', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['snackbar-container', 'success'],
+          });
+        },
+        error => {
+          this.snackBar.open('Please login to add to cart.', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['snackbar-container', 'success'],
+          });
+        }
+      );
   }
 }
