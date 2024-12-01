@@ -23,7 +23,7 @@ import { SupplierService } from '@core/services/supplier.service';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@core/services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BillService } from '@core/services/bill.service';
 
 @Component({
@@ -57,6 +57,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   private productService = inject(ProductService);
   private supplierService = inject(SupplierService);
   private billService = inject(BillService);
+  private readonly router = inject(Router);
   bill:any = {};
   billId:any = "";
 
@@ -113,6 +114,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
           verticalPosition: 'top',
           panelClass: ['success-snackbar']
         });
+        // this.router.navigateByUrl('/admin/bill/list');
         this.reactiveForm.reset();
       },()=>{
         this.snackBar.open('Something went wrong', 'Close', {

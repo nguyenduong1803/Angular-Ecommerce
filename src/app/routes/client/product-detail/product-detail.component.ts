@@ -19,7 +19,7 @@ import { Comment, ProductCommentComponent } from '../product-comment/product-com
 export class ProductDetailComponent implements OnInit {
   productId: string | null = null;
   product: any;
-  baseImage = 'http://transytrong20.ddns.net:12345/';
+  baseImage = 'http://103.101.162.250:8080/';
   productSelected: null | number = null;
   private readonly dialog = inject(MtxDialog);
   comments: any = {

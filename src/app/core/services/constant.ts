@@ -1,2 +1,2 @@
-export const baseUrl = 'http://transytrong20.ddns.net:12345/api/'
-export const baseImage = 'http://transytrong20.ddns.net:12345/'
+export const baseUrl = 'http://103.101.162.250:8080/api/';
+export const baseImage = 'http://103.101.162.250:8080/';

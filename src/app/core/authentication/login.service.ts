@@ -25,7 +25,7 @@ export class LoginService {
     return this.http.post<LoginResponse>(baseUrl + 'Auth', { username, password });
   }
   signUp(body: any) {
-    return this.http.post<LoginResponse>(baseUrl + 'Auth/SignUp', { body});
+    return this.http.post<LoginResponse>(baseUrl + 'Auth/SignUp', body);
   }
 
   refresh(params: Record<string, any>) {

@@ -30,7 +30,7 @@ export class ClientLayoutComponent implements OnInit {
   ngOnInit(): void {
     const hasToke = localStorage.getItem('laptop_ecommerce_token');
     const isAdmin = localStorage.getItem('laptop_ecommerce_role');
-    this.isAdmin = !!isAdmin;
+    this.isAdmin = isAdmin ==='Admin';
     this.isLoggedIn = hasToke ? true : false;
   }
 

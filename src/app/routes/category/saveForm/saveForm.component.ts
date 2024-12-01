@@ -20,7 +20,7 @@ import { CategoryService } from '@core/services/categogy.service';
 import { PageHeaderComponent } from '@shared';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-forms-category-saveForm',
@@ -50,7 +50,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   private readonly dateAdapter = inject(DateAdapter);
   private readonly translate = inject(TranslateService);
   private categoryService = inject(CategoryService);
-
+  private readonly router = inject(Router);
   reactiveForm = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
     id: [''],
@@ -86,6 +86,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
             verticalPosition: 'top',
             panelClass: ['success-snackbar']
           });
+          this.router.navigateByUrl('/admin/category/list');
           this.reactiveForm.reset();
         },()=>{
           this.snackBar.open('Something went wrong', 'Close', {
@@ -103,6 +104,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
             verticalPosition: 'top',
             panelClass: ['success-snackbar']
           });
+          this.router.navigateByUrl('/admin/category/list');
           this.reactiveForm.reset();
         },()=>{
           this.snackBar.open('Something went wrong', 'Close', {

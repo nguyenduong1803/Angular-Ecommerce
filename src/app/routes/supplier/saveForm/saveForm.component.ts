@@ -20,7 +20,7 @@ import { PageHeaderComponent } from '@shared';
 import { SupplierService } from '@core/services/supplier.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-forms-supplier-saveForm',
@@ -50,6 +50,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   private readonly dateAdapter = inject(DateAdapter);
   private readonly translate = inject(TranslateService);
   private supplierService = inject(SupplierService);
+  private readonly router = inject(Router);
 
   reactiveForm = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
@@ -111,6 +112,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
             verticalPosition: 'top',
             panelClass: ['success-snackbar']
           });
+          this.router.navigateByUrl('/admin/supplier/list');
           this.reactiveForm.reset();
         },()=>{
           this.snackBar.open('Something went wrong', 'Close', {
@@ -128,6 +130,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
             verticalPosition: 'top',
             panelClass: ['success-snackbar']
           });
+          this.router.navigateByUrl('/admin/supplier/list');
           this.reactiveForm.reset();
         },()=>{
           this.snackBar.open('Something went wrong', 'Close', {

@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     total: 0
   };
   categorySelected = 'all';
-  baseImage = 'http://transytrong20.ddns.net:12345/';
+  baseImage = 'http://103.101.162.250:8080/';
   constructor() {}
   ngOnInit() {
     const pageIndex = this.productResponse.pageIndex;

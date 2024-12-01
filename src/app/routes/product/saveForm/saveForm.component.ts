@@ -24,7 +24,7 @@ import { SupplierService } from '@core/services/supplier.service';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@core/services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-forms-saveForm',
@@ -64,6 +64,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
   private categoryService = inject(CategoryService);
   private productService = inject(ProductService);
   private supplierService = inject(SupplierService);
+  private readonly router = inject(Router);
 
   reactiveForm = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
@@ -144,6 +145,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
             verticalPosition: 'top',
             panelClass: ['success-snackbar']
           });
+          this.router.navigateByUrl('/admin/product/list');
           this.reactiveForm.reset();
         },()=>{
           // this.snackBar.open('Something went wrong', 'Close', {
@@ -161,6 +163,7 @@ export class SaveFormComponent implements OnInit, OnDestroy {
             verticalPosition: 'top',
             panelClass: ['success-snackbar']
           });
+          this.router.navigateByUrl('/admin/product/list');
           this.reactiveForm.reset();
         },()=>{
           // this.snackBar.open('Something went wrong', 'Close', {

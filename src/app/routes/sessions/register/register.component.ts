@@ -12,7 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '@core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -36,6 +36,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly loginService = inject(LoginService);
+  private readonly router = inject(Router);
+
   constructor(private snackBar: MatSnackBar) {
 
   }
@@ -63,6 +65,7 @@ export class RegisterComponent {
           verticalPosition: 'top',
           panelClass: ['success-snackbar']
         });
+        this.router.navigateByUrl('/auth/login');
         this.registerForm.reset();
       },(error)=>{
         console.log(error);

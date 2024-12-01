@@ -11,6 +11,9 @@ export class ProductService {
   create(body: any) {
     return this.http.post(baseUrl + 'Product', body);
   }
+  uploadImage(body: any) {
+    return this.http.post(baseUrl + 'UPload', body);
+  }
   update(body: any) {
     return this.http.put(baseUrl + 'Product/' + body.id, body);
   }

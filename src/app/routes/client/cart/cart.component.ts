@@ -34,7 +34,7 @@ export class CartComponent implements OnInit{
   carts:any[] = [];
   cartSelected: any[] = [];
   totalAmount = 0;
-  baseImage = 'http://transytrong20.ddns.net:12345/';
+  baseImage = 'http://103.101.162.250:8080/';
   constructor(private fb: FormBuilder,private snackBar: MatSnackBar, private route: ActivatedRoute) {
     this.orderForm = this.fb.group({
       fullName: ['', Validators.required],
