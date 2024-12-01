@@ -8,11 +8,14 @@ import { ProductService } from '@core/services/product.service';
 import { MtxDialog } from '@ng-matero/extensions/dialog';
 import { tap } from 'rxjs';
 import { Comment, ProductCommentComponent } from '../product-comment/product-comment.component';
+import { ModalDetailComponent } from '../modal-detail/modal-detail.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, ProductCommentComponent],
+  imports: [CommonModule, ProductCommentComponent,MatIcon],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
@@ -22,6 +25,8 @@ export class ProductDetailComponent implements OnInit {
   baseImage = 'http://103.101.162.250:8080/';
   productSelected: null | number = null;
   private readonly dialog = inject(MtxDialog);
+  private readonly matDialog = inject(MatDialog);
+
   comments: any = {
     data: [
       {
@@ -103,5 +108,15 @@ export class ProductDetailComponent implements OnInit {
           });
         }
       );
+  }
+
+  openBillDetail(data: any) {
+    const dialogConfig = {
+      width: '600px',
+      data,
+      panelClass: 'bill-detail',
+      showCloseIcon: true,
+    };
+    const dialogRef =  this.matDialog.open(ModalDetailComponent,dialogConfig);
   }
 }

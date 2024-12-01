@@ -28,7 +28,7 @@
             <div class="gallery">
               <div class="picture">
                 <a
-                  href="/"
+                  href="#"
                   title="Ảnh của MacBook Air M3 13 inch"
                   id="main-product-img-lightbox-anchor-3216"
                 >
@@ -127,8 +127,11 @@
             <div class="note_VAT">(Đã bao gồm VAT)</div>
             <div class="option-list">
               <div  *ngFor="let item of product?.options; index as i;" (click)="setProductSelect(item.id)" class="option-item" [ngClass]="{'active': item.id === productSelected}">
-              <p>{{item.name}} - {{item.configuration}}</p>
-              <p class="money"> {{item.price}}đ</p>
+        <div>
+                <p>{{item.name}}</p>
+                <p class="money"> {{item.price}}đ</p>
+        </div>
+              <mat-icon (click)="openBillDetail(item?.configuration)">visibility</mat-icon>
               </div>
 
             </div>
